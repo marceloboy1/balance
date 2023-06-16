@@ -22,6 +22,12 @@ app.get("/api", (req, res) => {
   })();
 });
 
+app.post("/formTest", (req, res) => {
+  console.log(req.body);
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
