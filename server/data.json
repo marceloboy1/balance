@@ -1,0 +1,151 @@
+[{
+  "id": 1,
+  "stock": "FLIC",
+  "company": "The First of Long Island Corporation",
+  "qtd": 11,
+  "price": "$665.88M"
+}, {
+  "id": 2,
+  "stock": "NTG",
+  "company": "Tortoise MLP Fund, Inc.",
+  "qtd": 39,
+  "price": "$854.52M"
+}, {
+  "id": 3,
+  "stock": "SNLN",
+  "company": "Highland/iBoxx Senior Loan ETF",
+  "qtd": 43,
+  "price": "$481.23M"
+}, {
+  "id": 4,
+  "stock": "AJRD",
+  "company": "Aerojet Rocketdyne Holdings, Inc. ",
+  "qtd": 12,
+  "price": "$1.55B"
+}, {
+  "id": 5,
+  "stock": "ASCMA",
+  "company": "Ascent Capital Group, Inc.",
+  "qtd": 68,
+  "price": "$183.57M"
+}, {
+  "id": 6,
+  "stock": "INST",
+  "company": "Instructure, Inc.",
+  "qtd": 55,
+  "price": "$751.86M"
+}, {
+  "id": 7,
+  "stock": "MSFT",
+  "company": "Microsoft Corporation",
+  "qtd": 37,
+  "price": "$540.44B"
+}, {
+  "id": 8,
+  "stock": "CASH",
+  "company": "Meta Financial Group, Inc.",
+  "qtd": 34,
+  "price": "$836.36M"
+}, {
+  "id": 9,
+  "stock": "BXP",
+  "company": "Boston Properties, Inc.",
+  "qtd": 98,
+  "price": "$19.4B"
+}, {
+  "id": 10,
+  "stock": "NBRV",
+  "company": "Nabriva Therapeutics AG",
+  "qtd": 16,
+  "price": "$250.34M"
+}, {
+  "id": 11,
+  "stock": "SAFM",
+  "company": "Sanderson Farms, Inc.",
+  "qtd": 87,
+  "price": "$2.88B"
+}, {
+  "id": 12,
+  "stock": "AIA",
+  "company": "iShares Asia 50 ETF",
+  "qtd": 29,
+  "price": "$385.08M"
+}, {
+  "id": 13,
+  "stock": "DHX",
+  "company": "DHI Group, Inc.",
+  "qtd": 2,
+  "price": "$128.99M"
+}, {
+  "id": 14,
+  "stock": "MYF",
+  "company": "Blackrock MuniYield Investment Fund",
+  "qtd": 76,
+  "price": "$217.64M"
+}, {
+  "id": 15,
+  "stock": "THR",
+  "company": "Thermon Group Holdings, Inc.",
+  "qtd": 9,
+  "price": "$608.57M"
+}, {
+  "id": 16,
+  "stock": "WAL",
+  "company": "Western Alliance Bancorporation",
+  "qtd": 10,
+  "price": "$5.2B"
+}, {
+  "id": 17,
+  "stock": "PAYX",
+  "company": "Paychex, Inc.",
+  "qtd": 23,
+  "price": "$21.95B"
+}, {
+  "id": 18,
+  "stock": "FTXL",
+  "company": "First Trust Nasdaq Semiconductor ETF",
+  "qtd": 3,
+  "price": "$21.58M"
+}, {
+  "id": 19,
+  "stock": "MYGN",
+  "company": "Myriad Genetics, Inc.",
+  "qtd": 14,
+  "price": "$1.63B"
+}, {
+  "id": 20,
+  "stock": "SFR",
+  "company": "Colony Starwood Homes",
+  "qtd": 23,
+  "price": "$4.37B"
+}, {
+  "id": 21,
+  "stock": "FCFP",
+  "company": "First Community Financial Partners, Inc.",
+  "qtd": 10,
+  "price": "$234.26M"
+}, {
+  "id": 22,
+  "stock": "ANF",
+  "company": "Abercrombie & Fitch Company",
+  "qtd": 97,
+  "price": "$852.24M"
+}, {
+  "id": 23,
+  "stock": "TRNO^A.CL",
+  "company": "Terreno Realty Corporation",
+  "qtd": 32,
+  "price": "n/a"
+}, {
+  "id": 24,
+  "stock": "MNR^C",
+  "company": "Monmouth Real Estate Investment Corporation",
+  "qtd": 46,
+  "price": "n/a"
+}, {
+  "id": 25,
+  "stock": "CDR^B",
+  "company": "Cedar Realty Trust, Inc.",
+  "qtd": 54,
+  "price": "n/a"
+}]
