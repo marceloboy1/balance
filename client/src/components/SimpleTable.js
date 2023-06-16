@@ -38,11 +38,8 @@ export default function DataTable() {
       .then((data) => setRows(data));
   }, []);
 
-  console.log("ROWS ", rows);
-
   return (
     <div className='tableContainer'>
-        
         <DataGrid 
           rows={rows}
           columns={columns}

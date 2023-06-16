@@ -10,9 +10,9 @@ async function connect(){
 }
 connect();
 
-async function selectItems(){
+async function selectItems(query){
     const conn = await connect();
-    return await conn.query('SELECT * FROM stocks');
+    return await conn.query(query);
 }
 
 module.exports = {selectItems}

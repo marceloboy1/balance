@@ -10,18 +10,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-(async getData => {
-  console.log("Select stocks");
-  //const [stoks] = await db.selectItems();
-  
-  //const [data] = await db.selectItems();
-  //console.log(stoks)
-})();
 
-const data = require('./data.json');
+//const data = db.selectItems();
+console.log("Get data")
+
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
-  res.json(data);
+  (async getData => {
+    const [data] = await db.selectItems('SELECT * FROM stocks WHERE ID = 3');
+    res.json(data);
+  })();
 });
 
 app.listen(PORT, () => {

@@ -1,6 +1,7 @@
 # Modules #
 client/node_modules/*
 server/node_modules/*
+db/*
 
 # Compiled source #
 ###################
