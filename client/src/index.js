@@ -7,11 +7,13 @@ import {
   Link,
   Outlet,
 } from "react-router-dom";
+import "./App.css"
 import Products from "./Routes/Products";
 import Reports from "./Routes/Reports";
 import Home from "./Routes/Home";
 import Navbar from "./components/Navbar"
-import "./App.css"
+import RegisterContainer from "./Routes/RegisterPage";
+
 
 const AppLayout = () => (
     <>
@@ -36,6 +38,11 @@ const router = createBrowserRouter([
                 path: "reports",
                 element: <Reports />,
               },
+              {
+                path: "register",
+                element: <RegisterContainer />,
+              },
+
         ]
     },
 

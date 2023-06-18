@@ -17,7 +17,7 @@ console.log("Get data")
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
   (async getData => {
-    const [data] = await db.selectItems('SELECT * FROM stocks WHERE ID = 3');
+    const [data] = await db.selectItems('SELECT * FROM stocks');
     res.json(data);
   })();
 });
