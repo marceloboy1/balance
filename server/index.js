@@ -10,23 +10,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
-//const data = db.selectItems();
-console.log("Get data")
-
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
   (async getData => {
-    const [data] = await db.selectItems('SELECT * FROM stocks');
+    const [data] = await db.getStocks('SELECT * FROM stocks');
     res.json(data);
+    console.log("GETED")
   })();
 });
 
-app.post("/formTest", (req, res) => {
-  console.log(req.body);
+//recebe a requisição do front e faz a call no DB
+//esta com um BUG pois aceita o mesmo usuário
+app.post("/register", (req, res) => {
+  const user = req.body.user;
+  const pwd = req.body.pwd;
+  const query = 'INSERT INTO users (user, pwd) VALUES (?, ?)';
+  (async postData => {
+    await db.postUser(query, user, pwd);
+    console.log("POSTED")
+  })();
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

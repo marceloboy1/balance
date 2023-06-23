@@ -10,9 +10,20 @@ async function connect(){
 }
 connect();
 
-async function selectItems(query){
+async function getStocks(query){
     const conn = await connect();
     return await conn.query(query);
 }
 
-module.exports = {selectItems}
+//função que posta os usuários
+async function postUser(query,user,pwd){
+    const conn = await connect();
+    return await conn.query(query, [user, pwd], (error, results, fields) => {
+        if (error) throw error;
+        console.log('Dados inseridos com sucesso!');
+      });
+}
+
+module.exports = {getStocks, postUser}
+
+

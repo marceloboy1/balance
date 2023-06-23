@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import axios from "./api/axios";
+
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -33,13 +35,18 @@ export default function DataTable() {
   const [rows, setRows] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/api")
-      .then((res) => res.json())
-      .then((data) => setRows(data));
+    const buscarDados = async () => {
+      const resposta = await axios.get('/api');
+      setRows(resposta.data);
+      console.log(rows)
+    }
+    buscarDados();
   }, []);
+
 
   return (
     <div className='tableContainer'>
+        {rows ? 
         <DataGrid 
           rows={rows}
           columns={columns}
@@ -52,6 +59,8 @@ export default function DataTable() {
           pageSizeOptions={[5, 10]}
           checkboxSelection
         />
+        :
+        <p>Carregando</p>}
     </div>
   );
 }
