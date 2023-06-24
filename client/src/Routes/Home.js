@@ -3,7 +3,7 @@ import SimpleTable from "../components/SimpleTable";
 
 function Home() {
     return (
-        <div className="home">
+        <div className="mainContainer">
             <SimpleTable />
         </div>
     )

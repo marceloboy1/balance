@@ -15,7 +15,15 @@ app.get("/api", (req, res) => {
   (async getData => {
     const [data] = await db.getStocks('SELECT * FROM stocks');
     res.json(data);
-    console.log("GETED")
+  })();
+});
+
+
+// Handle GET requests to /api route
+app.get("/gastos", (req, res) => {
+  (async getData => {
+    const [data] = await db.getStocks('SELECT * FROM gastos');
+    res.json(data);
   })();
 });
 
@@ -27,9 +35,10 @@ app.post("/register", (req, res) => {
   const query = 'INSERT INTO users (user, pwd) VALUES (?, ?)';
   (async postData => {
     await db.postUser(query, user, pwd);
-    console.log("POSTED")
   })();
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

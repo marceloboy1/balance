@@ -1,10 +1,15 @@
 import React from "react";
+import SimpleList from "../components/SimpleList";
+import SimpleTable from "../components/SimpleTable";
 
 function Products() {
 
     return (
-        <div className="products">
-            <p>Produtos</p>
+        <div className="mainContainer">
+            <SimpleTable />
+            <SimpleList />
+            <SimpleTable />
+            <SimpleList />
         </div>
     )
 }

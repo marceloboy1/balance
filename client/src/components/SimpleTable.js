@@ -1,6 +1,9 @@
+import "./Table.css"
+
 import React, { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import axios from "./api/axios";
+import { Typography } from "@mui/material";
 
 
 const columns = [
@@ -38,29 +41,37 @@ export default function DataTable() {
     const buscarDados = async () => {
       const resposta = await axios.get('/api');
       setRows(resposta.data);
-      console.log(rows)
     }
     buscarDados();
   }, []);
 
 
   return (
-    <div className='tableContainer'>
-        {rows ? 
-        <DataGrid 
-          rows={rows}
-          columns={columns}
-          getRowId={(row) => row.id}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-        />
-        :
-        <p>Carregando</p>}
+    <div className="itemContainer">
+      <Typography
+      variant='h3'
+      component='h3'
+      sx={{textAlign:'center',mt:3,mb:3}}>
+        Carteira de ações
+      </Typography>
+    
+      <div className='tableContainer'>
+          {rows ? 
+          <DataGrid 
+            rows={rows}
+            columns={columns}
+            getRowId={(row) => row.id}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+          />
+          :
+          <p>Carregando</p>}
+      </div>
     </div>
   );
 }

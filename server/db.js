@@ -24,6 +24,15 @@ async function postUser(query,user,pwd){
       });
 }
 
-module.exports = {getStocks, postUser}
+//função que posta os usuários
+async function getGastos(query){
+    const conn = await connect();
+    return await conn.query(query, (error, results, fields) => {
+        if (error) throw error;
+        console.log('Dados inseridos com sucesso!');
+      });
+}
+
+module.exports = {getStocks, postUser, getGastos}
 
 
