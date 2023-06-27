@@ -1,6 +1,7 @@
 import React from "react";
 import SimpleList from "../components/SimpleList";
 import SimpleTable from "../components/SimpleTable";
+import GastosTable from "../components/GastosTable";
 
 function Products() {
 
@@ -8,7 +9,7 @@ function Products() {
         <div className="mainContainer">
             <SimpleTable />
             <SimpleList />
-            <SimpleTable />
+            
             <SimpleList />
         </div>
     )

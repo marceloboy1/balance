@@ -17,6 +17,7 @@ const usdPrice = {
 };
 
 
+
 export default function SimpleList() {
  
   const [rows, setRows] = useState("");
@@ -53,6 +54,7 @@ export default function SimpleList() {
       setRows(resposta.data);
     }
     buscarDados();
+  
   }, []);
 
 

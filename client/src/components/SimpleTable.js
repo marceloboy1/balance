@@ -6,6 +6,7 @@ import axios from "./api/axios";
 import { Typography } from "@mui/material";
 
 
+//o objeto colunas recebe os dados de acordo com a documentação do DataGrid
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'symbol', headerName: 'Symbol', width: 130 },
@@ -33,10 +34,13 @@ const columns = [
   },
 ];
 
+
 export default function DataTable() {
  
   const [rows, setRows] = useState("");
 
+  //useEffect é usado para rodar uma função, leva 2 argumentos, a função em si (como uma arrow function) e um array de states que ele monitora
+  //cada vez que um desses states é alterado, o Effect é acionado. Se o array estiver vazio, ele roda sempre que carregar a página.
   useEffect(() => {
     const buscarDados = async () => {
       const resposta = await axios.get('/api');

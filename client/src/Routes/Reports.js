@@ -1,9 +1,10 @@
 import React from "react";
+import Tabela from "../components/Tabela";
 
 function Reports() {
     return (
         <div className="reports">
-            <h1>Reports</h1>
+            <Tabela />
         </div>
     )
 }

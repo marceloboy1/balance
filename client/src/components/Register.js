@@ -34,50 +34,52 @@ const Register = () => {
      const [errMsg, setErrMsg] = useState('');
      const [success, setSuccess] = useState(false);
 
-     //pesquisar
+    //useEffect é usado para rodar uma função, leva 2 argumentos, a função em si (como uma arrow function) e um array de states que ele monitora
+    //cada vez que um desses states é alterado, o Effect é acionado. Se o array estiver vazio, ele roda sempre que carregar a página.
      useEffect(() => {
         userRef.current.focus();
      }, []);
 
-     //pesquisar como funciona, mas é para testar o regex e se for válido usar no State
+    
+    //testa o regex cada vez que o user é alterado
      useEffect(() => {
         const result = USER_REGEX.test(user);
-        console.log(result);
-        console.log(user);
         setValidName(result);
      }, [user]);
 
-     //pesquisar como funciona, mas é para testar o regex e se for válido usar no State
-        useEffect(() => {
-            const result = PWD_REGEX.test(pwd);
-            console.log(result);
-            console.log(pwd);
-            setValidPwd(result);
-            const match = pwd === matchPwd;
-            setValidMatch(match);
-        }, [pwd, matchPwd]);
+    //testa o regex cada vez que o pwd é alterado
+    useEffect(() => {
+        const result = PWD_REGEX.test(pwd);
+        setValidPwd(result);
+        const match = pwd === matchPwd;
+        setValidMatch(match);
+    }, [pwd, matchPwd]);
 
-     useEffect(() => {
+    //limpa a mensagem de erro
+    useEffect(() => {
         setErrMsg('');
      }, [user,pwd,matchPwd]);
 
 
-     const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+    
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
+    
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
             return;
         }
+    
         try {
             const response = await axios.post(REGISTER_URL,
                 JSON.stringify({ user, pwd }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     
-                    /* alterar aqui para usar cookies e credenciais depois dos testes*/
+                    // alterar aqui para usar cookies e credenciais depois dos testes*/
                     withCredentials: false
                 }
             );
@@ -85,12 +87,14 @@ const Register = () => {
             console.log(response?.accessToken);
             console.log(JSON.stringify(response))
             setSuccess(true);
+
             //clear state and controlled inputs
             //need value attrib on inputs for this
             setUser('');
             setPwd('');
             setMatchPwd('');
         } catch (err) {
+        
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 409) {
@@ -98,7 +102,7 @@ const Register = () => {
             } else {
                 setErrMsg('Registration Failed')
             }
-            //errRef.current.focus();
+            errRef.current.focus();
         }
     }
 

@@ -24,6 +24,7 @@ app.get("/gastos", (req, res) => {
   (async getData => {
     const [data] = await db.getStocks('SELECT * FROM gastos');
     res.json(data);
+    console.log(data)
   })();
 });
 

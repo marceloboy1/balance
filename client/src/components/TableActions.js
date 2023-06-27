@@ -2,15 +2,40 @@ import { Box, CircularProgress, Fab } from '@mui/material';
 import React, { useState } from 'react';
 import {Check, Save} from '@mui/icons-material';
 import { green } from '@mui/material/colors';
+import axios from './api/axios';
 
 const TableActions = ({params, rowId, setRowId}) => {
 
-    const [loading, setLoading] = useState(true);
+    //useState é usado para armazendar variáveis..
+    const [loading, setLoading] = useState(false);
     const [success, setsuccess] = useState(false);
+    const [errMsg, seterrMsg] = useState('');
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        // e.preventDefault();
+              
+        // try {
+        //     const response = await axios.post(REGISTER_URL,
+        //         JSON.stringify({ user, pwd }),
+        //         {
+        //             headers: { 'Content-Type': 'application/json' },
+        //             // alterar aqui para usar cookies e credenciais depois dos testes*/
+        //             withCredentials: false
+        //         }
+        //     );
+            
+        // } catch (err) {
+        
+        //     if (!err?.response) {
+        //         setErrMsg('No Server Response');
+        //     } else if (err.response?.status === 409) {
+        //         setErrMsg('Username Taken');
+        //     } else {
+        //         setErrMsg('Registration Failed')
+        //     }
+        // }
+    }
 
-    };
 
     return (  
         <Box
