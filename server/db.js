@@ -24,7 +24,7 @@ async function postUser(query,user,pwd){
       });
 }
 
-//função que posta os usuários
+//função que pega os gasto
 async function getGastos(query){
     const conn = await connect();
     return await conn.query(query, (error, results, fields) => {
@@ -33,6 +33,15 @@ async function getGastos(query){
       });
 }
 
-module.exports = {getStocks, postUser, getGastos}
+//função que posta os gastos
+async function postGastos(query,gasto,categoria, valor){
+    const conn = await connect();
+    return await conn.query(query, [gasto, categoria, valor], (error, results, fields) => {
+        if (error) throw error;
+        console.log('Dados inseridos com sucesso!');
+      });
+}
+
+module.exports = {getStocks, postUser, getGastos, postGastos}
 
 

@@ -6,8 +6,7 @@ form {
   padding-bottom: 1rem;
 }
 
-input[type="text"],
-input[type="password"],
+.registerInput,
 button,
 textarea {
 font-family: 'Nunito', sans-serif;

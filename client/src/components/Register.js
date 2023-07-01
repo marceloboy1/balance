@@ -130,7 +130,7 @@ const Register = () => {
                         <FontAwesomeIcon icon={faTimes} />
                     </span>
                 </label>
-                <input
+                <input className="registerInput"
                     type="text"
                     id="username"
                     /*Não sei pra que serve userRef*/
@@ -164,6 +164,7 @@ const Register = () => {
                     </span>
                 </label>
                 <input
+                    className="registerInput"
                     type="password"
                     id="password"
                     onChange={(e) => setPwd(e.target.value)}
@@ -199,6 +200,7 @@ const Register = () => {
                     </span>
                 </label>
                 <input
+                    className="registerInput"
                     type="password"
                     id="confirm_pwd"
                     onChange={(e) => setMatchPwd(e.target.value)}

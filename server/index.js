@@ -39,6 +39,17 @@ app.post("/register", (req, res) => {
   })();
 });
 
+app.post("/gastos", (req, res) => {
+  const gasto = req.body.gasto;
+  const categoria = req.body.categoria;
+  const valor = req.body.valor;
+  console.log(req.body)
+  const query = 'INSERT INTO gastos (gasto, categoria, valor) VALUES (?, ?, ?)';
+  (async postData => {
+    await db.postGastos(query, gasto, categoria, valor);
+  })();
+});
+
 
 
 app.listen(PORT, () => {

@@ -1,9 +1,11 @@
 import "./Tabela.css"
 import React, { useEffect, useState } from 'react';
 import axios from "./api/axios";
+import TableActions from "./TableActions";
 
 function Tabela() {
 
+    const [rowId, setRowId] = useState(null)
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
     
@@ -22,7 +24,7 @@ function Tabela() {
 
     return ( 
         <div className="itemContainer">
-            
+
             <table className="tabela">
                 <thead>
                     <tr>
@@ -43,8 +45,32 @@ function Tabela() {
                             <td><a href="#">Edit</a> </td>
                         </tr>
                     ))}
+                    <tr>
+                            <td>
+                                ID
+                            </td>
+                            
+                            <td>
+                                <input className="tableInput" type="text" name="gasto" required="required" placeholder="Gasto" />
+                            </td>
+                            
+                            <td>
+                                <input className="tableInput" type="text" name="categoria" required="required" placeholder="Categoria" />
+                            </td>
+                            
+                            <td>
+                                <input className="tableInput" type="text" name="valor" required="required" placeholder="Valor" />
+                            </td>
+                            <td>
+                                <TableActions />
+                            </td>
+                            
+                    </tr>
+                    
                 </tbody>
             </table>
+
+
         </div>
      );
 }
