@@ -1,5 +1,5 @@
 import "./Tabela.css"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from "./api/axios";
 import TableActions from "./TableActions";
 
@@ -9,18 +9,34 @@ function Tabela() {
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
     
+    const [gasto, setGasto] = useState('');
+    const [categoria, setCategoria] = useState('');
+    const [valor, setValor] = useState('');
+
+    const gastoRef = useRef(null);
+    const categoriaRef = useRef(null);
+    const valorRef = useRef(null);
+
+    const handleClick = (e) => {
+        console.log("Clicked")
+        gastoRef.current.value = '';
+        categoriaRef.current.value = '';
+        valorRef.current.value = '';
+        setGasto('')
+        setCategoria('')
+        setValor('')
+    }
+
     useEffect(() => {
         const buscarDados = async () => {
-        const resposta = await axios.get('/gastos');
-        setLoading(false)
-        setRows(resposta.data);
-        }
+            const resposta = await axios.get('/gastos');
+            setLoading(false)
+            setRows(resposta.data);
+            }
 
-        buscarDados();
-        
+            buscarDados();
+       
     }, []);
-
-
 
     return ( 
         <div className="itemContainer">
@@ -51,26 +67,45 @@ function Tabela() {
                             </td>
                             
                             <td>
-                                <input className="tableInput" type="text" name="gasto" required="required" placeholder="Gasto" />
+                                <input 
+                                    className="tableInput" 
+                                    onChange={(e) => setGasto(e.target.value)} 
+                                    type="text" name="gasto" 
+                                    required="required" 
+                                    placeholder="Gasto" 
+                                    ref={gastoRef}
+                                    />
                             </td>
                             
                             <td>
-                                <input className="tableInput" type="text" name="categoria" required="required" placeholder="Categoria" />
+                                <input 
+                                className="tableInput" 
+                                onChange={(e) => setCategoria(e.target.value)} 
+                                type="text" name="categoria" 
+                                required="required" 
+                                placeholder="Categoria"
+                                ref={categoriaRef}
+                                />
                             </td>
                             
                             <td>
-                                <input className="tableInput" type="text" name="valor" required="required" placeholder="Valor" />
+                                <input 
+                                className="tableInput" 
+                                onChange={(e) => setValor(e.target.value)} 
+                                type="text" name="valor" 
+                                required="required" 
+                                placeholder="Valor"
+                                ref={valorRef}
+                            />
                             </td>
                             <td>
-                                <TableActions />
+                                <TableActions gasto={gasto} categoria={categoria} valor={valor} handleClick={handleClick}/>
                             </td>
                             
                     </tr>
                     
                 </tbody>
             </table>
-
-
         </div>
      );
 }

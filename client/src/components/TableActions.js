@@ -1,26 +1,25 @@
 import { Box, CircularProgress, Fab } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Check, Save} from '@mui/icons-material';
 import { green } from '@mui/material/colors';
 import axios from './api/axios';
 
 const GASTOS_URL = '/gastos';
 //descomentar depois para usar em outras tabelas
-const TableActions = (params/*, rowId, setRowId}*/) => {
+const TableActions = ({gasto, categoria, valor, handleClick}) => {
 
     //useState é usado para armazendar variáveis..
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [errMsg, setErrMsg] = useState('');
-
-    const gasto = "Putaria";
-    const categoria = "Zona";
-    const valor = "1000.00";
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-              
+        
         try {
+            handleClick();
+            console.log("Success")
+
             const response = await axios.post(GASTOS_URL,
                 JSON.stringify({ gasto, categoria, valor }),
                 {
@@ -28,7 +27,10 @@ const TableActions = (params/*, rowId, setRowId}*/) => {
                     // alterar aqui para usar cookies e credenciais depois dos testes*/
                     withCredentials: false
                 }
+                
             );
+
+            
             
         } catch (err) {
         
@@ -39,9 +41,10 @@ const TableActions = (params/*, rowId, setRowId}*/) => {
             } else {
                 setErrMsg('Registration Failed')
             }
+            console.log(errMsg)
         }
-    }
 
+    }
 
     return (  
         <Box
@@ -63,15 +66,15 @@ const TableActions = (params/*, rowId, setRowId}*/) => {
                 </Fab>
                 ) : (
                 <Fab
-                sx={{
-                    width:40,
-                    height:40,
-                }}
+                    sx={{
+                        width:40,
+                        height:40,
+                    }}
 
-                //descomentar depois para usar em outras tabelas
-                //disabled={params.id != rowId || loading}
-                onClick={handleSubmit}
-                >
+                    //descomentar depois para usar em outras tabelas
+                    disabled={!gasto || !categoria || !valor || loading}
+                    onClick={handleSubmit}
+                    >
                     <Save />
                 </Fab>
                 )}
@@ -88,6 +91,7 @@ const TableActions = (params/*, rowId, setRowId}*/) => {
                     }}
                     />
                 )}
+                <p>{gasto}</p>
         </Box>
     )
 };
