@@ -19,8 +19,12 @@
     background-color: rgb(117, 201, 250);
   }
 
-  td {
+  tr {
     background-color: rgb(205, 235, 253);
+  }
+
+  tr:hover {
+    background-color: rgb(89, 112, 126);
   }
 
   form {
