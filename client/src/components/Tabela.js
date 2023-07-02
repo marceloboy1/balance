@@ -17,26 +17,26 @@ function Tabela() {
     const categoriaRef = useRef(null);
     const valorRef = useRef(null);
 
-    const handleClick = (e) => {
+    useEffect(() => {
+            buscarDados();
+    }, []);
+
+    const buscarDados = async () => {
+        const resposta = await axios.get('/gastos');
+        setLoading(false);
+        setRows(resposta.data);
+        }
+
+    const handleClick = () => {
         console.log("Clicked")
         gastoRef.current.value = '';
         categoriaRef.current.value = '';
         valorRef.current.value = '';
-        setGasto('')
-        setCategoria('')
-        setValor('')
+        setGasto('');
+        setCategoria('');
+        setValor('');
+        buscarDados();
     }
-
-    useEffect(() => {
-        const buscarDados = async () => {
-            const resposta = await axios.get('/gastos');
-            setLoading(false)
-            setRows(resposta.data);
-            }
-
-            buscarDados();
-       
-    }, []);
 
     return ( 
         <div className="itemContainer">

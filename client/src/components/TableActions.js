@@ -14,11 +14,10 @@ const TableActions = ({gasto, categoria, valor, handleClick}) => {
     const [errMsg, setErrMsg] = useState('');
     
     const handleSubmit = async (e) => {
-        e.preventDefault();
         
+        e.preventDefault();
+
         try {
-            handleClick();
-            console.log("Success")
 
             const response = await axios.post(GASTOS_URL,
                 JSON.stringify({ gasto, categoria, valor }),
@@ -27,10 +26,11 @@ const TableActions = ({gasto, categoria, valor, handleClick}) => {
                     // alterar aqui para usar cookies e credenciais depois dos testes*/
                     withCredentials: false
                 }
-                
-            );
-
-            
+            ).then((res) => {
+                console.log("Success")
+                handleClick();
+                console.log(res)
+            });
             
         } catch (err) {
         
@@ -42,8 +42,7 @@ const TableActions = ({gasto, categoria, valor, handleClick}) => {
                 setErrMsg('Registration Failed')
             }
             console.log(errMsg)
-        }
-
+        } 
     }
 
     return (  
@@ -91,7 +90,6 @@ const TableActions = ({gasto, categoria, valor, handleClick}) => {
                     }}
                     />
                 )}
-                <p>{gasto}</p>
         </Box>
     )
 };

@@ -37,6 +37,7 @@ app.post("/register", (req, res) => {
   (async postData => {
     await db.postUser(query, user, pwd);
   })();
+
 });
 
 app.post("/gastos", (req, res) => {
@@ -48,6 +49,7 @@ app.post("/gastos", (req, res) => {
   (async postData => {
     await db.postGastos(query, gasto, categoria, valor);
   })();
+  res.send('Resposta enviada com sucesso!');
 });
 
 
