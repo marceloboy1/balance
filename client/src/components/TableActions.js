@@ -5,20 +5,23 @@ import { green } from '@mui/material/colors';
 import axios from './api/axios';
 
 const GASTOS_URL = '/gastos';
-//descomentar depois para usar em outras tabelas
+
+//recebe os valores do formulário da tabela.
 const TableActions = ({gasto, categoria, valor, handleClick}) => {
 
     //useState é usado para armazendar variáveis..
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+
     
     const handleSubmit = async (e) => {
-        
+        //previne o comportamento padrão    
         e.preventDefault();
 
+        //tenta fazer a requisição para o servidor, e após receber a resposta
+        //executa a função handleClick do componente Tabela
         try {
-
             const response = await axios.post(GASTOS_URL,
                 JSON.stringify({ gasto, categoria, valor }),
                 {
@@ -27,30 +30,26 @@ const TableActions = ({gasto, categoria, valor, handleClick}) => {
                     withCredentials: false
                 }
             ).then((res) => {
-                console.log("Success")
+                console.log("Dados adicionados com sucesso")
                 handleClick();
-                console.log(res)
             });
-            
+           
         } catch (err) {
-        
             if (!err?.response) {
                 setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
             }
             console.log(errMsg)
         } 
     }
 
     return (  
+
         <Box
         sx={{
            m:1,
            position:'relative' 
         }}>
+            {/*Se o sucesso for verdadeiro, o ícone vira o check*/}
             {success ? (
                 <Fab
                 color='primary'
@@ -70,7 +69,7 @@ const TableActions = ({gasto, categoria, valor, handleClick}) => {
                         height:40,
                     }}
 
-                    //descomentar depois para usar em outras tabelas
+                    //Se todos os campos estiverem preenchidos, o icone de salvar fica ativo
                     disabled={!gasto || !categoria || !valor || loading}
                     onClick={handleSubmit}
                     >
