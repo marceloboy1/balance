@@ -1,16 +1,16 @@
 import React from 'react';
 import EditActions from './EditActions';
 
-function EditableRow({ editFormData, handleEditFormChange, buscarDados }) {
+function EditableRow({ editFormData, handleEditFormChange, onEditSend }) {
     
     const handleClick = () => {
-        buscarDados();
+        onEditSend();
     }
 
     return (
     <tr>
         <td>
-            ID
+            {editFormData.id}
         </td>
         
         <td>

@@ -7,7 +7,7 @@ import axios from './api/axios';
 const GASTOS_URL = '/gastos';
 
 //recebe os valores do formulário da tabela.
-const TableActions = ({ editFormData, handleClick }) => {
+const TableActions = ({ newFormData, handleClick }) => {
 
     //useState é usado para armazendar variáveis..
     const [loading, setLoading] = useState(false);
@@ -22,13 +22,14 @@ const TableActions = ({ editFormData, handleClick }) => {
         //executa a função handleClick do componente Tabela
         try {
             const response = await axios.post(GASTOS_URL,
-                JSON.stringify({ editFormData }),
+                JSON.stringify({ newFormData }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     // alterar aqui para usar cookies e credenciais depois dos testes*/
                     withCredentials: false
                 }
             ).then((res) => {
+                console.log(res);
                 handleClick();
             });
            
@@ -69,7 +70,7 @@ const TableActions = ({ editFormData, handleClick }) => {
                     }}
 
                     //Se todos os campos estiverem preenchidos, o icone de salvar fica ativo
-                    disabled={loading}
+                    disabled={!newFormData.gasto || !newFormData.categoria || !newFormData.valor || loading}
                     onClick={handleSubmit}
                     >
                     <Save />

@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Fab } from '@mui/material';
+import { Box, CircularProgress, Fab, DeleteForeverIcon   } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import React, { useEffect, useState } from 'react';
 import {Check, Save} from '@mui/icons-material';
 import { green } from '@mui/material/colors';
@@ -29,7 +30,6 @@ const EditActions = ({ newFormData, handleClick }) => {
                     withCredentials: false
                 }
             ).then((res) => {
-                alert("Atualizado")
                 console.log(res.data)
                 handleClick();
             });

@@ -35,7 +35,7 @@ function Tabela() {
 
     //limpa as variáveis e os campos de input
     //buscarDados atualiza a tabela com os novos dados
-    const onSend = () => {
+    const onNewSend = () => {
 
         //reseta o resultado de formulario da nova linha
         setNewFormData({       
@@ -43,6 +43,18 @@ function Tabela() {
             categoria: "",
             valor: "",})
         buscarDados();
+    }
+
+    const onEditSend = () => {
+
+        //reseta o resultado de formulario da nova linha
+        setEditFormData({ 
+            id: "",      
+            gasto: "",
+            categoria: "",
+            valor: "",})
+        buscarDados();
+        setEditRowId(null);
     }
 
     //faz a requisição para o backend
@@ -87,7 +99,7 @@ function Tabela() {
         newRows[index] = editedRow;
 
         setRows(newRows);
-        setRowId(null);
+        
     }
 
     const handleEditClick = (event, row) => {
@@ -123,6 +135,7 @@ function Tabela() {
                                     <EditableRow 
                                         editFormData={editFormData} 
                                         handleEditFormChange={handleEditFormChange} 
+                                        onEditSend={onEditSend}
                                     /> : 
                                     <ReadOnlyRow 
                                         row={row} 
@@ -133,7 +146,7 @@ function Tabela() {
                         <NewRow                                         
                             newFormData={newFormData} 
                             handleNewFormChange={handleNewFormChange}
-                            onSend={onSend}
+                            onNewSend={onNewSend}
                         />
                     </tbody>
                 </table>

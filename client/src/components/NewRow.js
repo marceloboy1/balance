@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import TableActions from './TableActions';
 
-function NewRow({ newFormData, handleNewFormChange, onSend }) {
+function NewRow({ newFormData, handleNewFormChange, onNewSend }) {
 
     //usado para apagar os campos preenchidos após o envio dos dados
     const gastoRef = useRef(null);
@@ -12,7 +12,7 @@ function NewRow({ newFormData, handleNewFormChange, onSend }) {
         gastoRef.current.value = '';
         categoriaRef.current.value = '';
         valorRef.current.value = '';
-        onSend();
+        onNewSend();
     }
 
     return (
