@@ -7,7 +7,7 @@ import axios from './api/axios';
 const GASTOS_URL = '/gastos';
 
 //recebe os valores do formulário da tabela.
-const TableActions = ({ editFormData, handleClick }) => {
+const EditActions = ({ newFormData, handleClick }) => {
 
     //useState é usado para armazendar variáveis..
     const [loading, setLoading] = useState(false);
@@ -21,14 +21,16 @@ const TableActions = ({ editFormData, handleClick }) => {
         //tenta fazer a requisição para o servidor, e após receber a resposta
         //executa a função handleClick do componente Tabela
         try {
-            const response = await axios.post(GASTOS_URL,
-                JSON.stringify({ editFormData }),
+            const response = await axios.put(GASTOS_URL,
+                JSON.stringify({ newFormData }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     // alterar aqui para usar cookies e credenciais depois dos testes*/
                     withCredentials: false
                 }
             ).then((res) => {
+                alert("Atualizado")
+                console.log(res.data)
                 handleClick();
             });
            
@@ -92,4 +94,4 @@ const TableActions = ({ editFormData, handleClick }) => {
     )
 };
  
-export default TableActions;
+export default EditActions;

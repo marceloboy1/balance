@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import TableActions from './TableActions';
 
-function NewRow({ handleEditFormChange }) {
+function NewRow({ newFormData, handleNewFormChange, onSend }) {
+
+    //usado para apagar os campos preenchidos após o envio dos dados
+    const gastoRef = useRef(null);
+    const categoriaRef = useRef(null);
+    const valorRef = useRef(null);
+
+    const handleClick = () => {
+        gastoRef.current.value = '';
+        categoriaRef.current.value = '';
+        valorRef.current.value = '';
+        onSend();
+    }
+
     return (
     <tr>
         <td>
@@ -11,42 +24,42 @@ function NewRow({ handleEditFormChange }) {
         <td>
             <input 
                 className="tableInput" 
-                onChange={handleEditFormChange} 
+                onChange={handleNewFormChange} 
                 type="text" name="gasto" 
                 required="required" 
                 placeholder="Gasto"
-                //value={editFormData.gasto} 
-                //ref={gastoRef}
+                //value={newFormData.gasto} 
+                ref={gastoRef}
                 />
         </td>
         
         <td>
             <input 
             className="tableInput" 
-            onChange={handleEditFormChange} 
+            onChange={handleNewFormChange} 
             type="text" name="categoria" 
             required="required" 
             placeholder="Categoria"
-            //value={editFormData.categoria}
-            //ref={categoriaRef}
+            //value={newFormData.categoria}
+            ref={categoriaRef}
             />
         </td>
         
         <td>
             <input 
             className="tableInput" 
-            onChange={handleEditFormChange} 
+            onChange={handleNewFormChange} 
             type="text" name="valor" 
             required="required" 
             placeholder="Valor"
-            //value={editFormData.valor}
-            //ref={valorRef}
+            //value={newFormData.valor}
+            ref={valorRef}
         />
         </td>
         <td>
-            <button type="submit">Save</button>
+            
             {/* Ao clicar no icone ele envia os dados para o componente Actions para que sejam enviados para o servidor */}
-            {/* <TableActions gasto={gasto} categoria={categoria} valor={valor} handleClick={handleClick}/> */}
+            <TableActions newFormData={newFormData} handleClick={handleClick} />
         </td>
     </tr>
     )

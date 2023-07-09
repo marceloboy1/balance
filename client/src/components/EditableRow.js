@@ -1,7 +1,12 @@
 import React from 'react';
-import TableActions from './TableActions';
+import EditActions from './EditActions';
 
-function EditableRow({ editFormData, handleEditFormChange }) {
+function EditableRow({ editFormData, handleEditFormChange, buscarDados }) {
+    
+    const handleClick = () => {
+        buscarDados();
+    }
+
     return (
     <tr>
         <td>
@@ -44,7 +49,7 @@ function EditableRow({ editFormData, handleEditFormChange }) {
         />
         </td>
         <td>
-            <button type="submit">Save</button>
+            <EditActions newFormData={editFormData} handleClick={handleClick} />
             {/* Ao clicar no icone ele envia os dados para o componente Actions para que sejam enviados para o servidor */}
             {/* <TableActions gasto={gasto} categoria={categoria} valor={valor} handleClick={handleClick}/> */}
         </td>

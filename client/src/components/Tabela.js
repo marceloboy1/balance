@@ -1,7 +1,6 @@
 import "./Tabela.css"
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import axios from "./api/axios";
-import TableActions from "./TableActions";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditableRow from "./EditableRow";
 import NewRow from "./NewRow";
@@ -11,65 +10,69 @@ function Tabela() {
     const [rowId, setRowId] = useState(null)
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
-    
-    //Salva os dados do formulário
-    const [gasto, setGasto] = useState('');
-    const [categoria, setCategoria] = useState('');
-    const [valor, setValor] = useState('');
 
     //Salva os dados do formulário editado
     const [editFormData, setEditFormData] = useState({
+        id: "",
         gasto: "",
         categoria: "",
         valor: "",
     });
 
-    
+    //Salva os dados do novo fomrulário
+    const [newFormData, setNewFormData] = useState({
+        gasto: "",
+        categoria: "",
+        valor: "",
+    });
+        
     //state que guarda o ID da linha clicada para edição
     const [editRowId, setEditRowId] = useState(null);
 
-    //usado para apagar os campos preenchidos após o envio dos dados
-    const gastoRef = useRef(null);
-    const categoriaRef = useRef(null);
-    const valorRef = useRef(null);
-
     useEffect(() => {
-            buscarDados();
+        buscarDados();
     }, []);
-
-    //faz a requisição para o backend
-    const buscarDados = async () => {
-        const resposta = await axios.get('/gastos');
-        setLoading(false);
-        setRows(resposta.data);
-    }
 
     //limpa as variáveis e os campos de input
     //buscarDados atualiza a tabela com os novos dados
-    const handleClick = () => {
-        gastoRef.current.value = '';
-        categoriaRef.current.value = '';
-        valorRef.current.value = '';
-        setGasto('');
-        setCategoria('');
-        setValor('');
+    const onSend = () => {
+
+        //reseta o resultado de formulario da nova linha
+        setNewFormData({       
+            gasto: "",
+            categoria: "",
+            valor: "",})
         buscarDados();
     }
-    
+
+    //faz a requisição para o backend
+    const buscarDados = async () => {
+        const res = await axios.get('/gastos');
+        setLoading(false);
+        setRows(res.data);
+    }
+        
     const handleEditFormChange = (event) => {
         event.preventDefault();
         const fieldName = event.target.getAttribute("name");
         const fieldValue = event.target.value;
-
-        const newFormData = {...editFormData};
-        newFormData[fieldName] = fieldValue;
-
-        setEditFormData(newFormData);
+        const newEditableForm = {...editFormData};
+        newEditableForm[fieldName] = fieldValue;
+        setEditFormData(newEditableForm);
     }
 
-    const handleEditFormSubmit = (event) => {
+    const handleNewFormChange = (event) => {
         event.preventDefault();
-        console.log("asdasdas")
+        const fieldName = event.target.getAttribute("name");
+        const fieldValue = event.target.value;
+        const formData = {...newFormData };
+        formData[fieldName] = fieldValue;
+
+        setNewFormData(formData);
+    }
+
+    const handleEditFormSubmit = () => {
+        
         const editedRow = {
             id: editRowId,
             gasto: editFormData.gasto,
@@ -92,6 +95,7 @@ function Tabela() {
         setEditRowId(row.id);
 
         const formValues = {
+            id: row.id,
             gasto: row.gasto,
             categoria: row.categoria,
             valor: row.valor,
@@ -102,7 +106,6 @@ function Tabela() {
 
     return ( 
         <div className="itemContainer">
-            <form className="tableForm" onSubmit={handleEditFormSubmit}>
                 <table className="tabela">
                     <thead>
                         <tr>
@@ -128,12 +131,13 @@ function Tabela() {
                             </Fragment>
                         ))}
                         <NewRow                                         
-                            editFormData={editFormData} 
-                            handleEditFormChange={handleEditFormChange}
+                            newFormData={newFormData} 
+                            handleNewFormChange={handleNewFormChange}
+                            onSend={onSend}
                         />
                     </tbody>
                 </table>
-            </form>
+            
         </div>
      );
 }

@@ -22,9 +22,9 @@ app.get("/api", (req, res) => {
 // Handle GET requests to /api route
 app.get("/gastos", (req, res) => {
   (async getData => {
+    console.log("Fecthing data")
     const [data] = await db.getStocks('SELECT * FROM gastos');
     res.json(data);
-    console.log(data)
   })();
 });
 
@@ -41,18 +41,29 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/gastos", (req, res) => {
-  const gasto = req.body.gasto;
-  const categoria = req.body.categoria;
-  const valor = req.body.valor;
-  console.log(req.body)
+  const gasto = req.body.newFormData.gasto;
+  const categoria = req.body.newFormData.categoria;
+  const valor = req.body.newFormData.valor;
   const query = 'INSERT INTO gastos (gasto, categoria, valor) VALUES (?, ?, ?)';
   (async postData => {
     await db.postGastos(query, gasto, categoria, valor);
   })();
+  console.log("Item adicionados: ", gasto)
   res.send('Resposta enviada com sucesso!');
 });
 
-
+app.put("/gastos", (req, res) => {
+  const id = req.body.newFormData.id
+  const gasto = req.body.newFormData.gasto;
+  const categoria = req.body.newFormData.categoria;
+  const valor = req.body.newFormData.valor;
+  const query = 'UPDATE gastos SET gasto = ?,  categoria = ?, valor = ? WHERE id = ?';
+  (async postData => {
+    await db.putGastos(query, gasto, categoria, valor, id);
+  })();
+  console.log("Item atualizado: ", gasto)
+  res.send('Resposta enviada com sucesso!');
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
