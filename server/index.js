@@ -52,37 +52,22 @@ app.post("/gastos", (req, res) => {
   res.send('Resposta enviada com sucesso!');
 });
 
+
 app.put("/gastos", (req, res) => {
-  console.log(req.body.newFormData)
-  const id = req.body.newFormData.id
-  const gasto = req.body.newFormData.gasto;
-  const categoria = req.body.newFormData.categoria;
-  const valor = req.body.newFormData.valor;
-  const query = 'UPDATE gastos SET gasto = ?,  categoria = ?, valor = ? WHERE id = ?';
-  (async postData => {
-    await db.putGastos(query, gasto, categoria, valor, id);
-  })();
-  console.log("Item atualizado: ", gasto)
-  res.send('Resposta enviada com sucesso!');
+  console.log(req.body)
+  res.send('Servidor recebeu a requisição de PUT');
 });
 
 app.delete("/gastos", (req, res) => {
   console.log(req.body)
-  // const id = req.body.newFormData.id
-  // const gasto = req.body.newFormData.gasto
-  // const query = 'DELETE from gastos WHERE id = ?';
-  // (async postData => {
-  //   await db.deleteGastos(query, gasto, id);
-  // })();
-  // console.log("Item deletado: ", gasto)
-  res.send('Gasto deletado com sucesso!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+   res.send('Servidor recebeu a requisição de DELETE');
 });
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/src', 'index.js'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });

@@ -1,43 +1,27 @@
 import React, { useState } from 'react';
+import axios from './api/axios';
+
 import { Box, Fab } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
-import axios from './api/axios';
+
 const GASTOS_URL = '/gastos';
 
 
 const ReadOnlyRow = ({row, handleEditClick}) => {
     
-    const [errMsg, setErrMsg] = useState('');
-    
-    const handleDelete = (e, rowToDelete) => {
-        
-        //previne o comportamento padrão    
-        e.preventDefault();
-        
-        try {
-            
-            console.log(JSON.stringify({rowToDelete}))
-            const response = axios.delete(GASTOS_URL,
-                JSON.stringify( {rowToDelete} ),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    // alterar aqui para usar cookies e credenciais depois dos testes*/
-                    withCredentials: false
-                }
-            ).then((res) => {
-                console.log(res.data)
-                //handleClick();
-                //setLoading(false)
-            });
-           
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-                console.log(errMsg)
+    const handleDelete = () => {
+       
+        console.log(row)
+        const response = axios.delete("/gastos", 
+            JSON.stringify({row}),
+            {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: false
             }
-            
-        } 
+        ).then((res) => {
+            console.log(res.data)
+        });
     }
 
     return (
