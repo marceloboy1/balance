@@ -16,7 +16,7 @@ const EditActions = ({ newFormData, handleClick }) => {
     const [errMsg, setErrMsg] = useState('');
     
     const handleCancel = () => {
-        alert("Cancel")
+        handleClick();
     }
 
     const handleSubmit = (e) => {

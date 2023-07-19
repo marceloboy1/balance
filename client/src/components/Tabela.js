@@ -7,7 +7,6 @@ import NewRow from "./NewRow";
 
 function Tabela() {
 
-    const [rowId, setRowId] = useState(null)
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -100,11 +99,6 @@ function Tabela() {
         setEditFormData(formValues)
     }
 
-    const handleDelete = (event, row) => {
-        alert("Delete")
-    }
-
-
     return ( 
         <div className="itemContainer">
                 <table className="tabela">
@@ -141,7 +135,6 @@ function Tabela() {
                         />
                     </tbody>
                 </table>
-            
         </div>
      );
 }

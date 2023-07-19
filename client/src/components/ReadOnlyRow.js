@@ -17,10 +17,8 @@ const ReadOnlyRow = ({row, handleEditClick, onDeleteSend}) => {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: false,
                 data: { row: row }
-        }
- 
-            
-        ).then((res) => {
+        })
+        .then((res) => {
             onDeleteSend()
         });
     }
