@@ -8,19 +8,20 @@ import EditIcon from '@mui/icons-material/Edit';
 const GASTOS_URL = '/gastos';
 
 
-const ReadOnlyRow = ({row, handleEditClick}) => {
+const ReadOnlyRow = ({row, handleEditClick, onDeleteSend}) => {
     
     const handleDelete = () => {
-       
-        console.log(row)
+        
         const response = axios.delete("/gastos", 
-            JSON.stringify({row}),
             {
                 headers: { 'Content-Type': 'application/json' },
-                withCredentials: false
-            }
+                withCredentials: false,
+                data: { row: row }
+        }
+ 
+            
         ).then((res) => {
-            console.log(res.data)
+            onDeleteSend()
         });
     }
 

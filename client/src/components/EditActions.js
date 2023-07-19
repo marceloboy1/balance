@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import axios from './api/axios';
-
-import {Check, Save} from '@mui/icons-material';
-import { green } from '@mui/material/colors';
 import { Box, CircularProgress, Fab  } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import React, { useEffect, useState } from 'react';
+import {Check, Save} from '@mui/icons-material';
+import { green } from '@mui/material/colors';
+import axios from './api/axios';
 
 const GASTOS_URL = '/gastos';
 
@@ -20,19 +19,24 @@ const EditActions = ({ newFormData, handleClick }) => {
         alert("Cancel")
     }
 
-    const handleSubmit = () => {
-       
-        console.log(newFormData)
+    const handleSubmit = (e) => {
+        
+        //previne o comportamento padrão    
+        e.preventDefault();
+        setLoading(true)
+        //tenta fazer a requisição para o servidor, e após receber a resposta
+        //executa a função handleClick do componente Tabela
         const response = axios.put(GASTOS_URL,
             JSON.stringify({ newFormData }),
             {
                 headers: { 'Content-Type': 'application/json' },
+                // alterar aqui para usar cookies e credenciais depois dos testes*/
                 withCredentials: false
             }
         ).then((res) => {
-            console.log(res.data)
+            handleClick();
+            setLoading(false)
         });
-
     }
 
     return (  

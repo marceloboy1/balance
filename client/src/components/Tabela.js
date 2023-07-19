@@ -56,6 +56,10 @@ function Tabela() {
         setEditRowId(null);
     }
 
+    const onDeleteSend = () => {
+        buscarDados();
+    }
+
     //faz a requisição para o backend
     const buscarDados = async () => {
         const res = await axios.get('/gastos');
@@ -125,7 +129,7 @@ function Tabela() {
                                     <ReadOnlyRow 
                                         row={row} 
                                         handleEditClick={handleEditClick}
-                                        handleDelete={handleDelete}
+                                        onDeleteSend={onDeleteSend}
                                         
                                     />}
                             </Fragment>
