@@ -1,5 +1,5 @@
-import { Box, CircularProgress, Fab, DeleteForeverIcon   } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box, CircularProgress, Fab  } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import React, { useEffect, useState } from 'react';
 import {Check, Save} from '@mui/icons-material';
 import { green } from '@mui/material/colors';
@@ -15,14 +15,21 @@ const EditActions = ({ newFormData, handleClick }) => {
     const [success, setSuccess] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     
-    const handleSubmit = async (e) => {
+    const handleCancel = () => {
+        alert("Cancel")
+    }
+
+    const handleSubmit = (e) => {
+        
         //previne o comportamento padrão    
         e.preventDefault();
-
+        setLoading(true)
         //tenta fazer a requisição para o servidor, e após receber a resposta
         //executa a função handleClick do componente Tabela
         try {
-            const response = await axios.put(GASTOS_URL,
+            
+            console.log(newFormData)
+            const response = axios.put(GASTOS_URL,
                 JSON.stringify({ newFormData }),
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -32,6 +39,7 @@ const EditActions = ({ newFormData, handleClick }) => {
             ).then((res) => {
                 console.log(res.data)
                 handleClick();
+                setLoading(false)
             });
            
         } catch (err) {
@@ -71,11 +79,12 @@ const EditActions = ({ newFormData, handleClick }) => {
                     }}
 
                     //Se todos os campos estiverem preenchidos, o icone de salvar fica ativo
-                    disabled={loading}
+                    disabled={!newFormData.gasto || !newFormData.categoria || !newFormData.valor || loading}
                     onClick={handleSubmit}
                     >
                     <Save />
                 </Fab>
+                
                 )}
 
                 { loading && (
@@ -90,7 +99,22 @@ const EditActions = ({ newFormData, handleClick }) => {
                     }}
                     />
                 )}
+
+                <Fab
+                    sx={{
+                        width:40,
+                        height:40,
+                        marginLeft: 2, 
+                        }}
+                    >
+                    <ClearIcon
+                        onClick={handleCancel}
+                    >
+                    </ClearIcon>
+                </Fab>
+                
         </Box>
+
     )
 };
  

@@ -7,7 +7,7 @@ import axios from './api/axios';
 const GASTOS_URL = '/gastos';
 
 //recebe os valores do formulário da tabela.
-const TableActions = ({ newFormData, handleClick }) => {
+const NewRowActions = ({ newFormData, handleClick }) => {
 
     //useState é usado para armazendar variáveis..
     const [loading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ const TableActions = ({ newFormData, handleClick }) => {
         //tenta fazer a requisição para o servidor, e após receber a resposta
         //executa a função handleClick do componente Tabela
         try {
+            setLoading(true)
             const response = await axios.post(GASTOS_URL,
                 JSON.stringify({ newFormData }),
                 {
@@ -31,6 +32,7 @@ const TableActions = ({ newFormData, handleClick }) => {
             ).then((res) => {
                 console.log(res);
                 handleClick();
+                setLoading(false)
             });
            
         } catch (err) {
@@ -93,4 +95,4 @@ const TableActions = ({ newFormData, handleClick }) => {
     )
 };
  
-export default TableActions;
+export default NewRowActions;

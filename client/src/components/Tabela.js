@@ -46,7 +46,6 @@ function Tabela() {
     }
 
     const onEditSend = () => {
-
         //reseta o resultado de formulario da nova linha
         setEditFormData({ 
             id: "",      
@@ -83,25 +82,6 @@ function Tabela() {
         setNewFormData(formData);
     }
 
-    const handleEditFormSubmit = () => {
-        
-        const editedRow = {
-            id: editRowId,
-            gasto: editFormData.gasto,
-            categoria: editFormData.categoria,
-            valor: editFormData.valor,
-        };
-
-        const newRows = [...rows];
-
-        const index = rows.findIndex((row) => row.id === editRowId);
-
-        newRows[index] = editedRow;
-
-        setRows(newRows);
-        
-    }
-
     const handleEditClick = (event, row) => {
         event.preventDefault();
         setEditRowId(row.id);
@@ -115,6 +95,11 @@ function Tabela() {
 
         setEditFormData(formValues)
     }
+
+    const handleDelete = (event, row) => {
+        alert("Delete")
+    }
+
 
     return ( 
         <div className="itemContainer">
@@ -140,6 +125,8 @@ function Tabela() {
                                     <ReadOnlyRow 
                                         row={row} 
                                         handleEditClick={handleEditClick}
+                                        handleDelete={handleDelete}
+                                        
                                     />}
                             </Fragment>
                         ))}

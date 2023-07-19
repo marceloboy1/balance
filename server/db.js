@@ -49,6 +49,14 @@ async function putGastos(query,gasto,categoria, valor, id){
       });
 }
 
-module.exports = {getStocks, postUser, getGastos, postGastos, putGastos}
+async function deleteGastos(query, id){
+    const conn = await connect();
+    return await conn.query(query, [id], (error, results, fields) => {
+        if (error) throw error;
+      });
+}
+
+
+module.exports = {getStocks, postUser, getGastos, postGastos, putGastos, deleteGastos}
 
 

@@ -53,6 +53,7 @@ app.post("/gastos", (req, res) => {
 });
 
 app.put("/gastos", (req, res) => {
+  console.log(req.body.newFormData)
   const id = req.body.newFormData.id
   const gasto = req.body.newFormData.gasto;
   const categoria = req.body.newFormData.categoria;
@@ -63,6 +64,18 @@ app.put("/gastos", (req, res) => {
   })();
   console.log("Item atualizado: ", gasto)
   res.send('Resposta enviada com sucesso!');
+});
+
+app.delete("/gastos", (req, res) => {
+  console.log(req.body)
+  // const id = req.body.newFormData.id
+  // const gasto = req.body.newFormData.gasto
+  // const query = 'DELETE from gastos WHERE id = ?';
+  // (async postData => {
+  //   await db.deleteGastos(query, gasto, id);
+  // })();
+  // console.log("Item deletado: ", gasto)
+  res.send('Gasto deletado com sucesso!');
 });
 
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "./api/axios";
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Typography } from "@mui/material";
-import TableActions from "./TableActions.js";
+import NewRowActions from "./NewRowActions.js";
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -40,7 +40,7 @@ export default function SimpleList() {
         headerName:'Actions',  
         type:'actions', 
         renderCell: (params) => (
-          <TableActions {...{params, rowId, setRowId}}/>
+          <NewRowActions {...{params, rowId, setRowId}}/>
         )
       }
     ],

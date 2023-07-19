@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import TableActions from './TableActions';
+import NewRowActions from './NewRowActions';
 
 function NewRow({ newFormData, handleNewFormChange, onNewSend }) {
 
@@ -59,7 +59,7 @@ function NewRow({ newFormData, handleNewFormChange, onNewSend }) {
         <td>
             
             {/* Ao clicar no icone ele envia os dados para o componente Actions para que sejam enviados para o servidor */}
-            <TableActions newFormData={newFormData} handleClick={handleClick} />
+            <NewRowActions newFormData={newFormData} handleClick={handleClick} />
         </td>
     </tr>
     )
