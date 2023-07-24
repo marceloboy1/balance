@@ -18,16 +18,6 @@ app.get("/api", (req, res) => {
   })();
 });
 
-
-// Handle GET requests to /api route
-app.get("/gastos", (req, res) => {
-  (async getData => {
-    console.log("Fecthing data")
-    const [data] = await db.getStocks('SELECT * FROM gastos');
-    res.json(data);
-  })();
-});
-
 //recebe a requisição do front e faz a call no DB
 //esta com um BUG pois aceita o mesmo usuário
 app.post("/register", (req, res) => {
@@ -35,9 +25,24 @@ app.post("/register", (req, res) => {
   const pwd = req.body.pwd;
   const query = 'INSERT INTO users (user, pwd) VALUES (?, ?)';
   (async postData => {
-    await db.postUser(query, user, pwd);
+    const resp = await db.postUser(query, user, pwd);
+    if ( resp != 0 ) {
+      res.statusCode = 409
+    }
+    console.log(resp)
+    res.json(resp)
   })();
 
+});
+
+
+// Handle GET requests to /gastos route
+app.get("/gastos", (req, res) => {
+  (async getData => {
+    console.log("Fecthing data")
+    const [data] = await db.getStocks('SELECT * FROM gastos');
+    res.json(data);
+  })();
 });
 
 app.post("/gastos", (req, res) => {

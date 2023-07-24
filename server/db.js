@@ -18,10 +18,22 @@ async function getStocks(query){
 //função que posta os usuários
 async function postUser(query,user,pwd){
     const conn = await connect();
-    return await conn.query(query, [user, pwd], (error, results, fields) => {
-        if (error) throw error;
-        console.log('Dados inseridos com sucesso!');
-      });
+    try {
+        await conn.query(query, [user, pwd])
+        console.log("Usuario cadastrado")
+        return(0);
+      }
+    catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            console.log("Usuario duplicado")
+            return(error)
+        }
+        else{
+            console.log('Outro erro:', error)
+            return(error)
+        }
+    }
+    
 }
 
 //função que pega os gasto

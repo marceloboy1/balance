@@ -97,6 +97,7 @@ const Register = () => {
         
             if (!err?.response) {
                 setErrMsg('No Server Response');
+                
             } else if (err.response?.status === 409) {
                 setErrMsg('Username Taken');
             } else {
