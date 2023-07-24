@@ -4,7 +4,7 @@ import Register from '../components/Register';
 function RegisterPage() {
 
     return (
-        <div className='mainContainer'>
+        <div className='itemContainer'>
             <div>
                 <Register />
             </div>

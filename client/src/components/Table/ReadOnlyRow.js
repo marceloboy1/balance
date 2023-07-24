@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from './api/axios';
+import React, { useEffect, useState } from 'react';
+import axios from '../api/axios';
 
 import { Box, Fab } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -8,8 +8,11 @@ import EditIcon from '@mui/icons-material/Edit';
 const GASTOS_URL = '/gastos';
 
 
+
 const ReadOnlyRow = ({row, handleEditClick, onDeleteSend}) => {
     
+    const [showIcons, setShowIcons] = useState(false);
+
     const handleDelete = () => {
         
         const response = axios.delete("/gastos", 
@@ -24,12 +27,15 @@ const ReadOnlyRow = ({row, handleEditClick, onDeleteSend}) => {
     }
 
     return (
-    <tr>
+    <tr
+    onMouseEnter={() => {setShowIcons(true)}}
+    onMouseLeave={() => {setShowIcons(false)}}
+    >
         <td>{row.id}</td>
         <td>{row.gasto}</td>
         <td>{row.categoria}</td>
         <td>{row.valor}</td>
-        <td>
+        <td>{showIcons? 
             <Box
                 sx={{
                     m:1,
@@ -60,6 +66,15 @@ const ReadOnlyRow = ({row, handleEditClick, onDeleteSend}) => {
                     />
                 </Fab>
             </Box>
+            :            
+            <Box
+                sx={{
+                    m:1,
+                    position:'relative' ,
+                    width:40,
+                    height:40,
+                }}>
+            </Box>}
         </td>
     </tr>
     )

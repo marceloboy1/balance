@@ -1,47 +1,46 @@
-import { Box, CircularProgress, Fab } from '@mui/material';
+import { Box, CircularProgress, Fab  } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import React, { useEffect, useState } from 'react';
 import {Check, Save} from '@mui/icons-material';
 import { green } from '@mui/material/colors';
-import axios from './api/axios';
+import axios from '../api/axios';
 
 const GASTOS_URL = '/gastos';
 
 //recebe os valores do formulário da tabela.
-const NewRowActions = ({ newFormData, handleClick }) => {
+const EditActions = ({ newFormData, handleClick }) => {
 
     //useState é usado para armazendar variáveis..
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [errMsg, setErrMsg] = useState('');
-    
-    const handleSubmit = async (e) => {
+
+    const handleCancel = () => {
+        handleClick();
+    }
+
+    const handleSubmit = (e) => {
+        
         //previne o comportamento padrão    
         e.preventDefault();
+        
+        setLoading(true)
 
         //tenta fazer a requisição para o servidor, e após receber a resposta
         //executa a função handleClick do componente Tabela
-        try {
-            setLoading(true)
-            const response = await axios.post(GASTOS_URL,
-                JSON.stringify({ newFormData }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    // alterar aqui para usar cookies e credenciais depois dos testes*/
-                    withCredentials: false
-                }
-            ).then((res) => {
-                console.log(res);
-                handleClick();
-                setLoading(false)
-            });
-           
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-                console.log(errMsg)
+        const response = axios.put(GASTOS_URL,
+            JSON.stringify({ newFormData }),
+            {
+                headers: { 'Content-Type': 'application/json' },
+                // alterar aqui para usar cookies e credenciais depois dos testes*/
+                withCredentials: false
             }
-            
-        } 
+        ).then((res) => {
+            handleClick();
+   
+        }).finally(() => {
+            setLoading(false)
+        });
     }
 
     return (  
@@ -77,6 +76,7 @@ const NewRowActions = ({ newFormData, handleClick }) => {
                     >
                     <Save />
                 </Fab>
+                
                 )}
 
                 { loading && (
@@ -91,8 +91,23 @@ const NewRowActions = ({ newFormData, handleClick }) => {
                     }}
                     />
                 )}
+
+                <Fab
+                    sx={{
+                        width:40,
+                        height:40,
+                        marginLeft: 2, 
+                        }}
+                    >
+                    <ClearIcon
+                        onClick={handleCancel}
+                    >
+                    </ClearIcon>
+                </Fab>
+                
         </Box>
+
     )
 };
  
-export default NewRowActions;
+export default EditActions;

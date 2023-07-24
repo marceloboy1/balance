@@ -8,8 +8,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import "./App.css"
-import Products from "./Routes/Products";
-import Reports from "./Routes/Reports";
+import Gastos from "./Routes/Gastos";
+import Orcamento from "./Routes/Orcamento";
 import Home from "./Routes/Home";
 import Navbar from "./components/Navbar"
 import RegisterContainer from "./Routes/RegisterPage";
@@ -31,12 +31,12 @@ const router = createBrowserRouter([
                 element:<Home />,
               },
               {
-                path: "products",
-                element: <Products />,
+                path: "gastos",
+                element: <Gastos />,
               },
               {
-                path: "reports",
-                element: <Reports />,
+                path: "orcamento",
+                element: <Orcamento />,
               },
               {
                 path: "register",

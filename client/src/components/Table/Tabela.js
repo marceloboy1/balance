@@ -1,6 +1,6 @@
 import "./Tabela.css"
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import axios from "./api/axios";
+import React, { Fragment, useEffect, useState } from 'react';
+import axios from "../api/axios";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditableRow from "./EditableRow";
 import NewRow from "./NewRow";
@@ -9,6 +9,11 @@ function Tabela() {
 
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
+    const [showIcons, setShowIcons] = useState(false);
+
+    
+    //state que guarda o ID da linha clicada para edição
+    const [editRowId, setEditRowId] = useState(null);
 
     //Salva os dados do formulário editado
     const [editFormData, setEditFormData] = useState({
@@ -24,9 +29,10 @@ function Tabela() {
         categoria: "",
         valor: "",
     });
-        
-    //state que guarda o ID da linha clicada para edição
-    const [editRowId, setEditRowId] = useState(null);
+
+    useEffect(() => {
+        console.log(showIcons);
+    }, [showIcons]);
 
     useEffect(() => {
         buscarDados();
@@ -101,7 +107,8 @@ function Tabela() {
 
     return ( 
         <div className="itemContainer">
-                <table className="tabela">
+                <table className="tabela"
+>
                     <thead>
                         <tr>
                             <th> Id </th>
@@ -113,14 +120,14 @@ function Tabela() {
                     </thead>
                     <tbody>
                         {loading ? <h3> Loading data... </h3> : rows.map((row) => (       
-                            <Fragment>
+                            <Fragment>                           
                                 {editRowId === row.id ? 
                                     <EditableRow 
                                         editFormData={editFormData} 
                                         handleEditFormChange={handleEditFormChange} 
                                         onEditSend={onEditSend}
                                     /> : 
-                                    <ReadOnlyRow 
+                                    <ReadOnlyRow
                                         row={row} 
                                         handleEditClick={handleEditClick}
                                         onDeleteSend={onDeleteSend}
