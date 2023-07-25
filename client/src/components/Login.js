@@ -1,6 +1,7 @@
 import "./Register.css"
 
 import { useRef, useState, useEffect } from "react";
+import { useNavigate  } from "react-router-dom"
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from './api/axios';
@@ -23,6 +24,8 @@ const Login = () => {
 
     //State para controlar User, PWD, e PWD match, Focus é para acessibilidade
      const [user, setUser] = useState('');
+     const [loggedUser, setLoggedUser] = useState();
+
      const [validName, setValidName] = useState(false);
      const [userFocus, setUserFocus] = useState(false);
 
@@ -57,8 +60,11 @@ const Login = () => {
         setErrMsg('');
      }, [user,pwd]);
 
+     const navigate = useNavigate ();
+
 
     const handleSubmit = async (e) => {
+        
         e.preventDefault();
     
         // if button enabled with JS hack
@@ -70,32 +76,31 @@ const Login = () => {
             return;
         }
 
+        
+        const hash = bcrypt.hashSync(pwd, 8);
+
         try {
-            const response = await axios.get(LOGIN_URL, {
-                params: {
-                    "user": user
-                    }
+            const response = await axios.post(LOGIN_URL,
+                JSON.stringify({ user, hash }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    
+                    // alterar aqui para usar cookies e credenciais depois dos testes*/
+                    withCredentials: false
                 }
             );
-
-            const hash = response.data[0][0].hash;
-
-            if (bcrypt.compareSync(pwd, hash))
-            {
-                setSuccess(true);
-            }
-            else 
-            { 
-                console.log("Password invalido")
-                setErrMsg("Password ou usuario invalido") 
-                errRef.current.focus();
-            }
+            console.log(response?.data);
+            //console.log(response?.accessToken);
+            //console.log(JSON.stringify(response))
+            //setSuccess(true);
 
             //clear state and controlled inputs
             //need value attrib on inputs for this
-            setUser('');
-            setPwd('');
-         } catch (err) {
+            setLoggedUser(response.data);
+            localStorage.setItem('user', response.data)
+            navigate.push('/orcamento');
+           
+        } catch (err) {
         
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -108,7 +113,6 @@ const Login = () => {
             errRef.current.focus();
         }
     }
-
     return (
         <>{
             success ? (

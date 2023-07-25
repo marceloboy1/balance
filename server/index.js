@@ -2,6 +2,9 @@ const db = require("./db");
 const path = require('path');
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -35,14 +38,31 @@ app.post("/register", (req, res) => {
 
 });
 
-app.get("/login", (req, res) => {
-  const user = req.query.user;
-  console.log(user)
+app.post("/login", (req, res) => {
+  console.log("Loggin in")
+  const user = req.body.user;
+  const hash = req.body.hash;
   const query = 'SELECT * FROM users WHERE user = ?';
   (async postData => {
     const resp = await db.getUser(query, user);
-    //console.log(resp)
-    res.json(resp)
+    //const sessionUser = resp[0][0]
+    if (bcrypt.compare(hash, resp[0][0]["hash"])){
+      console.log("SUCCESS")
+      const token = jwt.sign(user, 'secret-key');
+      console.log('Token gerado:', token);
+      const sessionUser = {
+        'id': resp[0][0]['id'],
+        'user': resp[0][0]['user'],
+        'token': token
+      }
+
+      res.json(sessionUser)
+    }
+    else {
+      console.log("Failure")
+      res.json(resp)
+    }
+    
   })();
 
 });
