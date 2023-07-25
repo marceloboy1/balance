@@ -12,7 +12,8 @@ import Gastos from "./Routes/Gastos";
 import Orcamento from "./Routes/Orcamento";
 import Home from "./Routes/Home";
 import Navbar from "./components/Navbar"
-import RegisterContainer from "./Routes/RegisterPage";
+import RegisterPage from "./Routes/RegisterPage";
+import LoginPage from "./Routes/LoginPage";
 
 
 const AppLayout = () => (
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
               },
               {
                 path: "register",
-                element: <RegisterContainer />,
+                element: <RegisterPage />,
+              },
+              {
+                path: "login",
+                element: <LoginPage />,
               },
 
         ]

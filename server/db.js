@@ -19,7 +19,7 @@ async function getStocks(query){
 async function postUser(query,user,pwd){
     const conn = await connect();
     try {
-        await conn.query(query, [user, pwd])
+        return await conn.query(query, [user, pwd])
         console.log("Usuario cadastrado")
         return(0);
       }
@@ -33,8 +33,26 @@ async function postUser(query,user,pwd){
             return(error)
         }
     }
-    
 }
+
+//função que pega os usuários
+async function getUser(query, user){
+    const conn = await connect();
+    try {
+        return await conn.query(query, [user])
+      }
+    catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            console.log("Usuario duplicado")
+            return(error)
+        }
+        else{
+            console.log('Outro erro:', error)
+            return(error)
+        }
+    }
+}
+
 
 //função que pega os gasto
 async function getGastos(query){
@@ -52,7 +70,6 @@ async function postGastos(query,gasto,categoria, valor){
       });
 }
 
-
 //função que atualiza os gastos
 async function putGastos(query,gasto,categoria, valor, id){
     const conn = await connect();
@@ -68,7 +85,6 @@ async function deleteGastos(query, id){
       });
 }
 
-
-module.exports = {getStocks, postUser, getGastos, postGastos, putGastos, deleteGastos}
+module.exports = {getStocks, postUser, getUser, getGastos, postGastos, putGastos, deleteGastos}
 
 

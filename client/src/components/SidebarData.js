@@ -32,4 +32,12 @@ export const SidebarData = [
         cName:"nav-text",
         iName:"nav-icon",
     },
+
+    {
+        title: "Login",
+        path: "/login",
+        icon: <FaIcons.FaAddressCard />,
+        cName:"nav-text",
+        iName:"nav-icon",
+    },
 ]

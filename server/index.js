@@ -22,10 +22,10 @@ app.get("/api", (req, res) => {
 //esta com um BUG pois aceita o mesmo usuário
 app.post("/register", (req, res) => {
   const user = req.body.user;
-  const pwd = req.body.pwd;
-  const query = 'INSERT INTO users (user, pwd) VALUES (?, ?)';
+  const hash = req.body.hash;
+  const query = 'INSERT INTO users (user, hash) VALUES (?, ?)';
   (async postData => {
-    const resp = await db.postUser(query, user, pwd);
+    const resp = await db.postUser(query, user, hash);
     if ( resp != 0 ) {
       res.statusCode = 409
     }
@@ -35,6 +35,17 @@ app.post("/register", (req, res) => {
 
 });
 
+app.get("/login", (req, res) => {
+  const user = req.query.user;
+  console.log(user)
+  const query = 'SELECT * FROM users WHERE user = ?';
+  (async postData => {
+    const resp = await db.getUser(query, user);
+    //console.log(resp)
+    res.json(resp)
+  })();
+
+});
 
 // Handle GET requests to /gastos route
 app.get("/gastos", (req, res) => {

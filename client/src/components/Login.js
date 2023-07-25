@@ -10,12 +10,12 @@ import axios from './api/axios';
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 //Regex para testar o pwd, de 8 a 24 letras, numeros e caracteres especias
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const LOGIN_URL = '/login';
 
 //para criar a hash que vai ser armazenada como password
 const bcrypt = require('bcryptjs');
 
-const Register = () => {
+const Login = () => {
 
     //não sei pra que serve isso
     const userRef = useRef();
@@ -29,10 +29,6 @@ const Register = () => {
      const [pwd, setPwd] = useState('');
      const [validPwd, setValidPwd] = useState(false);
      const [pwdFocus, setPwdFocus] = useState(false);
-
-     const [matchPwd, setMatchPwd] = useState('');
-     const [validMatch, setValidMatch] = useState(false);
-     const [matchFocus, setMatchFocus] = useState(false);
 
      const [errMsg, setErrMsg] = useState('');
      const [success, setSuccess] = useState(false);
@@ -54,14 +50,12 @@ const Register = () => {
     useEffect(() => {
         const result = PWD_REGEX.test(pwd);
         setValidPwd(result);
-        const match = pwd === matchPwd;
-        setValidMatch(match);
-    }, [pwd, matchPwd]);
+    }, [pwd]);
 
     //limpa a mensagem de erro
     useEffect(() => {
         setErrMsg('');
-     }, [user,pwd,matchPwd]);
+     }, [user,pwd]);
 
 
     const handleSubmit = async (e) => {
@@ -76,30 +70,32 @@ const Register = () => {
             return;
         }
 
-        const hash = bcrypt.hashSync(pwd, 8);
-        console.log(hash)
-
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, hash }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    
-                    // alterar aqui para usar cookies e credenciais depois dos testes*/
-                    withCredentials: false
+            const response = await axios.get(LOGIN_URL, {
+                params: {
+                    "user": user
+                    }
                 }
             );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
+
+            const hash = response.data[0][0].hash;
+
+            if (bcrypt.compareSync(pwd, hash))
+            {
+                setSuccess(true);
+            }
+            else 
+            { 
+                console.log("Password invalido")
+                setErrMsg("Password ou usuario invalido") 
+                errRef.current.focus();
+            }
 
             //clear state and controlled inputs
             //need value attrib on inputs for this
             setUser('');
             setPwd('');
-            setMatchPwd('');
-        } catch (err) {
+         } catch (err) {
         
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -117,16 +113,16 @@ const Register = () => {
         <>{
             success ? (
                 <section>
-                    <h1>User registred!</h1>
+                    <h1>User logged</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <a href="#">Log out</a>
                     </p>
                 </section>
             ) : (
         
         <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Register</h1>
+            <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">
                     Username:
@@ -196,42 +192,15 @@ const Register = () => {
                 
                 </p>
 
-               {/*Campo de confirmação de password*/}
-               <label htmlFor="confirm_pwd">
-                    Confirm password:
-                    <span className={validMatch && matchPwd ? "valid" : "hide"}>
-                        <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
-                        <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                </label>
-                <input
-                    className="registerInput"
-                    type="password"
-                    id="confirm_pwd"
-                    onChange={(e) => setMatchPwd(e.target.value)}
-                    required
-                    /*Se o pwd for invalido, o screen reader vai ler o campo de informação uidnote*/
-                    aria-invalid={validMatch ? "false" : "true"}
-                    aria-describedby="confirmnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}
-                    />
+ 
 
-                {/* Se estiver em foco, se o user name começou a ser digitado e se for invalido, exibe a informação, senao tira ela da tela.     */}
-                <p id="confirmnote" className={matchFocus && !validMatch ? "instruction" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Must match the first password field.
-                </p>
-
-                <button disabled={!validName || !validMatch || !validPwd ? true : false}>Sign Up</button>
+                <button disabled={!validName || !validPwd ? true : false}>Log In</button>
             </form>
 
             <p>
-                Already registered?<br />
+                Doesn´t have an account?<br />
                 {/*put router link here*/}
-                <a href="/login">Sign In</a>
+                <a href="/register">Register</a>
             
             </p>
             
@@ -241,4 +210,4 @@ const Register = () => {
     ); 
 }
  
-export default Register;
+export default Login;
