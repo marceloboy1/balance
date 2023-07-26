@@ -90,14 +90,16 @@ const Login = () => {
                 }
             );
             console.log(response?.data);
-            //console.log(response?.accessToken);
-            //console.log(JSON.stringify(response))
-            //setSuccess(true);
+            
+            setSuccess(true);
 
             //clear state and controlled inputs
             //need value attrib on inputs for this
             setLoggedUser(response.data);
-            localStorage.setItem('user', response.data)
+            localStorage.setItem('user', JSON.stringify(response.data))
+            
+            
+            //ESSA PARTE NAO ESTA FUNCIONANDO, VERIFICAR
             navigate.push('/orcamento');
            
         } catch (err) {
@@ -202,7 +204,7 @@ const Login = () => {
             </form>
 
             <p>
-                Doesn´t have an account?<br />
+                Don't have an account?<br />
                 {/*put router link here*/}
                 <a href="/register">Register</a>
             

@@ -13,14 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Handle GET requests to /api route
-app.get("/api", (req, res) => {
-  (async getData => {
-    const [data] = await db.getStocks('SELECT * FROM stocks');
-    res.json(data);
-  })();
-});
-
 //recebe a requisição do front e faz a call no DB
 //esta com um BUG pois aceita o mesmo usuário
 app.post("/register", (req, res) => {
@@ -72,6 +64,7 @@ app.get("/gastos", (req, res) => {
   (async getData => {
     console.log("Fecthing data")
     const [data] = await db.getStocks('SELECT * FROM gastos');
+    console.log(data)
     res.json(data);
   })();
 });

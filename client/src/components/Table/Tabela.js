@@ -9,8 +9,6 @@ function Tabela() {
 
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
-    const [showIcons, setShowIcons] = useState(false);
-
     
     //state que guarda o ID da linha clicada para edição
     const [editRowId, setEditRowId] = useState(null);
@@ -29,10 +27,6 @@ function Tabela() {
         categoria: "",
         valor: "",
     });
-
-    useEffect(() => {
-        console.log(showIcons);
-    }, [showIcons]);
 
     useEffect(() => {
         buscarDados();
@@ -69,6 +63,7 @@ function Tabela() {
     const buscarDados = async () => {
         const res = await axios.get('/gastos');
         setLoading(false);
+        console.log(res.data)
         setRows(res.data);
     }
         
