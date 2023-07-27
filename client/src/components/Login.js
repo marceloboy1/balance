@@ -18,14 +18,16 @@ const bcrypt = require('bcryptjs');
 
 const Login = () => {
 
-    //não sei pra que serve isso
+    //para redirecionar o usuario
+    const navigate = useNavigate ();
+
+    //para pegar elementos html
     const userRef = useRef();
     const errRef = useRef();
 
     //State para controlar User, PWD, e PWD match, Focus é para acessibilidade
      const [user, setUser] = useState('');
-     const [loggedUser, setLoggedUser] = useState();
-
+     
      const [validName, setValidName] = useState(false);
      const [userFocus, setUserFocus] = useState(false);
 
@@ -34,7 +36,6 @@ const Login = () => {
      const [pwdFocus, setPwdFocus] = useState(false);
 
      const [errMsg, setErrMsg] = useState('');
-     const [success, setSuccess] = useState(false);
 
     //useEffect é usado para rodar uma função, leva 2 argumentos, a função em si (como uma arrow function) e um array de states que ele monitora
     //cada vez que um desses states é alterado, o Effect é acionado. Se o array estiver vazio, ele roda sempre que carregar a página.
@@ -60,7 +61,7 @@ const Login = () => {
         setErrMsg('');
      }, [user,pwd]);
 
-     const navigate = useNavigate ();
+    
 
 
     const handleSubmit = async (e) => {
@@ -90,17 +91,13 @@ const Login = () => {
                 }
             );
             console.log(response?.data);
-            
-            setSuccess(true);
 
             //clear state and controlled inputs
-            //need value attrib on inputs for this
-            setLoggedUser(response.data);
             localStorage.setItem('user', JSON.stringify(response.data))
             
             
-            //ESSA PARTE NAO ESTA FUNCIONANDO, VERIFICAR
-            navigate.push('/orcamento');
+            //Redireciona o usuario apos o login
+            navigate('/orcamento');
            
         } catch (err) {
         
@@ -117,15 +114,7 @@ const Login = () => {
     }
     return (
         <>{
-            success ? (
-                <section>
-                    <h1>User logged</h1>
-                    <p>
-                        <a href="#">Log out</a>
-                    </p>
-                </section>
-            ) : (
-        
+            
         <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Log In</h1>
@@ -211,7 +200,7 @@ const Login = () => {
             </p>
             
         </section>
-        )}
+        }
         </>
     ); 
 }

@@ -11,22 +11,22 @@ const PrivateRoute = ({ children, ...rest }) => {
 
 
   return (
-    <Routes>
-      <Route
-        {...rest}
-        element={
-          isLoggedIn ? (
-            children
-          ) : (
-            <Navigate
-              to="/login"
-              state={{ from: location }}
-              replace
-            />
-          )
-        }
-      />
-    </Routes>
+    
+    <Route
+      {...rest}
+      element={
+        isLoggedIn ? (
+          children
+        ) : (
+          <Navigate
+            to="/login"
+            state={{ from: location }}
+            replace
+          />
+        )
+      }
+    />
+  
     );
 };
 

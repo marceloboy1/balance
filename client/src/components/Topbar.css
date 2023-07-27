@@ -1,0 +1,30 @@
+.topbar {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding: 20px;
+    height: 50px;
+    width: 100%;
+    background-color: indigo;
+    z-index: 100;
+}
+
+.item {
+    color: antiquewhite;
+    font-weight:500;
+    padding: 10px;
+}
+
+.item:hover{
+    font-weight: 700;
+}
+
+
+.topMenu {
+    display: flex;
+    flex-direction: row;
+}
+
+p {
+    cursor: default;
+}

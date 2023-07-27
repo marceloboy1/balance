@@ -21,7 +21,6 @@
   }
   
   .navbarFixed.active {
-    background-color: #000000;
     transition: 50ms;
     z-index: 1;
   }

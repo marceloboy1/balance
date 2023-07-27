@@ -1,5 +1,7 @@
 import "./Register.css"
 
+import { useNavigate } from "react-router-dom"
+
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +19,10 @@ const bcrypt = require('bcryptjs');
 
 const Register = () => {
 
-    //não sei pra que serve isso
+    //para redirecionar o usuario
+    const navigate = useNavigate ();
+    
+    //para pegar elementos HTML
     const userRef = useRef();
     const errRef = useRef();
 
@@ -35,12 +40,12 @@ const Register = () => {
      const [matchFocus, setMatchFocus] = useState(false);
 
      const [errMsg, setErrMsg] = useState('');
-     const [success, setSuccess] = useState(false);
-
+     
     //useEffect é usado para rodar uma função, leva 2 argumentos, a função em si (como uma arrow function) e um array de states que ele monitora
     //cada vez que um desses states é alterado, o Effect é acionado. Se o array estiver vazio, ele roda sempre que carregar a página.
      useEffect(() => {
         userRef.current.focus();
+        
      }, []);
 
     
@@ -66,7 +71,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
@@ -92,7 +97,7 @@ const Register = () => {
             console.log(response?.data);
             console.log(response?.accessToken);
             console.log(JSON.stringify(response))
-            setSuccess(true);
+            navigate("/gastos")
 
             //clear state and controlled inputs
             //need value attrib on inputs for this
@@ -103,7 +108,6 @@ const Register = () => {
         
             if (!err?.response) {
                 setErrMsg('No Server Response');
-                
             } else if (err.response?.status === 409) {
                 setErrMsg('Username Taken');
             } else {
@@ -114,16 +118,7 @@ const Register = () => {
     }
 
     return (
-        <>{
-            success ? (
-                <section>
-                    <h1>User registred!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
-                </section>
-            ) : (
-        
+
         <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
@@ -236,8 +231,7 @@ const Register = () => {
             </p>
             
         </section>
-        )}
-        </>
+
     ); 
 }
  

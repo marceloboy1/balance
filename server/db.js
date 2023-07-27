@@ -19,10 +19,10 @@ async function getStocks(query){
 async function postUser(query,user,pwd){
     const conn = await connect();
     try {
-        return await conn.query(query, [user, pwd])
+        await conn.query(query, [user, pwd])
         console.log("Usuario cadastrado")
         return(0);
-      }
+    }
     catch (error) {
         if (error.code === 'ER_DUP_ENTRY') {
             console.log("Usuario duplicado")

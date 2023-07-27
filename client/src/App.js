@@ -1,63 +1,59 @@
-import * as React from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Outlet,
-} from "react-router-dom";
-import "./App.css"
-import Gastos from "./Routes/Gastos";
-import Orcamento from "./Routes/Orcamento";
-import Home from "./Routes/Home";
-import Navbar from "./components/Navbar"
-import RegisterPage from "./Routes/RegisterPage";
-import LoginPage from "./Routes/LoginPage";
-import PrivateRoute from "./PrivateRoute";
-
-const AppLayout = () => (
-  <>
-      <Navbar />
-      <Outlet />
-  </>
-)
-
-const router = createBrowserRouter([
-  {
-      
-      element:<AppLayout/>,
-      children:[
-          {
-              path: "/",
-              element:<Home />,
-            },
-            {
-              
-              //Retirar o <PrivateRoute que funciona
-              path: "gastos/*",
-              element: <PrivateRoute><Gastos /></PrivateRoute>,
-            },
-            {
-              //Retirar o <PrivateRoute que funciona
-              path: "orcamento/*",
-              element: <PrivateRoute ><Orcamento /></PrivateRoute>,
-            },
-            {
-              path: "register",
-              element: <RegisterPage />,
-            },
-            {
-              path: "login",
-              element: <LoginPage />,
-            },
-
-      ]
-  },
-
-]);
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation, Outlet } from 'react-router-dom';
+import Home from './Routes/Home';
+import Gastos from './Routes/Gastos';
+import Orcamento from './Routes/Orcamento';
+import RegisterPage from './Routes/RegisterPage';
+import LoginPage from './Routes/LoginPage';
+import Navbar from './components/Navbar';
+import Topbar from './components/Topbar';
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <Router>
+      <div>
+        <Topbar />
+        <Layout>
+          <Routes>
+            
+            <Route path="/" element={<Home />} />
+            <Route path="/gastos" element={<PrivateRoute />} >
+              <Route path="/gastos" element={<Gastos />} />
+            </Route>
+            <Route path="/orcamento" element={<PrivateRoute />} >
+              <Route path="/orcamento" element={<Orcamento />} />
+            </Route>
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </Layout>
+      </div>
+    </Router>
   );
+}
+
+function Layout({ children }) {
+  const location = useLocation();
+  const hideSidebar = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/' ;
+  
+  return (
+    <>
+      {!hideSidebar && <div><Navbar /> </div>}
+      {children}
+    </>
+  );
+}
+
+function PrivateRoute() {
+  // Substitua esta linha pelo seu próprio código de autenticação
+  const isAuthenticated = !!localStorage.getItem('user');
+  console.log(isAuthenticated)
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return <Outlet />;
 }
 
 export default App;

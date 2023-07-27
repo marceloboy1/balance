@@ -1,6 +1,6 @@
 // PrivateRoute.js
 import React from 'react';
-import { Route, Navigate, useLocation, Routes } from 'react-router-dom';
+import { Route, Navigate, useLocation } from 'react-router-dom';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const isLoggedIn = !!localStorage.getItem('user');
@@ -11,22 +11,20 @@ const PrivateRoute = ({ children, ...rest }) => {
 
 
   return (
-    <Routes>
-      <Route
-        {...rest}
-        element={
-          isLoggedIn ? (
-            children
-          ) : (
-            <Navigate
-              to="/login"
-              state={{ from: location }}
-              replace={true}
-            />
-          )
-        }
-      />
-    </Routes>
+    <Route
+      {...rest}
+      element={
+        isLoggedIn ? (
+          children
+        ) : (
+          <Navigate
+            to="/login"
+            state={{ from: location }}
+            replace={true}
+          />
+        )
+      }
+    />
     );
 };
 
