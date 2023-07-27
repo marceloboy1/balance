@@ -5,8 +5,9 @@ import Gastos from './Routes/Gastos';
 import Orcamento from './Routes/Orcamento';
 import RegisterPage from './Routes/RegisterPage';
 import LoginPage from './Routes/LoginPage';
-import Navbar from './components/Navbar';
+
 import Topbar from './components/Topbar';
+import Sidebar from './components/Sidebar';
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function Layout({ children }) {
   
   return (
     <>
-      {!hideSidebar && <div><Navbar /> </div>}
+      {!hideSidebar && <div><Sidebar /> </div>}
       {children}
     </>
   );

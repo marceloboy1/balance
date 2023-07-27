@@ -26,16 +26,16 @@ export const SidebarData = [
         iName:"nav-icon",
     },
     {
-        title: "Register",
-        path: "/register",
+        title: "Carteira",
+        path: "#",
         icon: <FaIcons.FaAddressCard />,
         cName:"nav-text",
         iName:"nav-icon",
     },
 
     {
-        title: "Login",
-        path: "/login",
+        title: "Movimentação",
+        path: "#",
         icon: <FaIcons.FaAddressCard />,
         cName:"nav-text",
         iName:"nav-icon",
