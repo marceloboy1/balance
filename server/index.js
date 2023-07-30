@@ -64,7 +64,6 @@ app.get("/gastos", (req, res) => {
   (async getData => {
     console.log("Fecthing data")
     const [data] = await db.getStocks('SELECT * FROM gastos');
-    console.log(data)
     res.json(data);
   })();
 });
@@ -106,6 +105,27 @@ app.delete("/gastos", (req, res) => {
   console.log("Item deletado: ", gasto)
   res.send('Gasto deletado com sucesso!');
 });
+
+
+// CATEGORIAS
+
+// Handle GET requests to /categoria route
+app.get("/orcamento", (req, res) => {
+  
+  const id = req.query.id;
+  const user = req.query.user;
+  const token = req.query.token;
+  
+  (async getData => {
+    const [data] = await db.getStocks('SELECT id, categoria, valor FROM categorias');
+    res.json(data);
+    console.log(data)
+    console.log(data.length);
+  })();
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

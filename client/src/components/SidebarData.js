@@ -6,7 +6,7 @@ import * as HiIcons from "react-icons/hi"
 export const SidebarData = [
     {
         title: "Home",
-        path: "/",
+        path: "/Home",
         icon: <AiIcons.AiFillHome />,
         cName:"nav-text",
         iName:"nav-icon",

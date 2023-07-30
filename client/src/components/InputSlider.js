@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
+import "./InputSlider.css"
 
 const Input = styled(MuiInput)`
   width: 35px;
@@ -14,16 +15,18 @@ export default function InputSlider({text, valor, handleChange}) {
 
   const [value, setValue] = useState(valor);
 
-  useEffect(() => {
-    handleChange(text, value)
-  },[value])
+  // useEffect(() => {
+  //   handleChange(text, value)
+  // },[value])
 
 const handleSliderChange = (event, newValue) => {
     setValue(newValue);
+    handleChange(text, newValue)
   };
 
   const handleInputChange = (event) => {
     setValue(event.target.value === '' ? '' : Number(event.target.value));
+    handleChange(text, Number(event.target.value))
   };
 
   const handleBlur = () => {
@@ -53,7 +56,9 @@ const handleSliderChange = (event, newValue) => {
         </Grid>
 
         <Grid item>
-          <Input
+          <Input 
+            inputProps={{ className: 'input' }}
+            className='inputNumber'
             value={value}
             size="small"
             onChange={handleInputChange}

@@ -65,6 +65,7 @@ function Tabela() {
         setLoading(false);
         console.log(res.data)
         setRows(res.data);
+        console.log(rows)
     }
         
     const handleEditFormChange = (event) => {
@@ -101,43 +102,39 @@ function Tabela() {
     }
 
     return ( 
-        <div className="itemContainer">
-                <table className="tabela"
->
-                    <thead>
-                        <tr>
-                            <th> Id </th>
-                            <th> Gasto </th>
-                            <th> Categoria </th>
-                            <th> Valor </th>
-                            <th> Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? <h3> Loading data... </h3> : rows.map((row) => (       
-                            <Fragment>                           
-                                {editRowId === row.id ? 
-                                    <EditableRow 
-                                        editFormData={editFormData} 
-                                        handleEditFormChange={handleEditFormChange} 
-                                        onEditSend={onEditSend}
-                                    /> : 
-                                    <ReadOnlyRow
-                                        row={row} 
-                                        handleEditClick={handleEditClick}
-                                        onDeleteSend={onDeleteSend}
-                                        
-                                    />}
-                            </Fragment>
-                        ))}
-                        <NewRow                                         
-                            newFormData={newFormData} 
-                            handleNewFormChange={handleNewFormChange}
-                            onNewSend={onNewSend}
-                        />
-                    </tbody>
-                </table>
-        </div>
+        <table className="tabela">
+            <thead>
+                <tr>
+                    <th> Gasto </th>
+                    <th> Categoria </th>
+                    <th> Valor </th>
+                    <th> Ação </th>
+                </tr>
+            </thead>
+            <tbody>
+                {loading ? <h3> Loading data... </h3> : rows.map((row) => (       
+                    <Fragment key={row.id}>                           
+                        {editRowId === row.id ? 
+                            <EditableRow 
+                                editFormData={editFormData} 
+                                handleEditFormChange={handleEditFormChange} 
+                                onEditSend={onEditSend}
+                            /> : 
+                            <ReadOnlyRow
+                                row={row} 
+                                handleEditClick={handleEditClick}
+                                onDeleteSend={onDeleteSend}
+                                
+                            />}
+                    </Fragment>
+                ))}
+                <NewRow                                         
+                    newFormData={newFormData} 
+                    handleNewFormChange={handleNewFormChange}
+                    onNewSend={onNewSend}
+                />
+            </tbody>
+        </table>
      );
 }
 

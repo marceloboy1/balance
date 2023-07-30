@@ -31,7 +31,6 @@ const ReadOnlyRow = ({row, handleEditClick, onDeleteSend}) => {
     onMouseEnter={() => {setShowIcons(true)}}
     onMouseLeave={() => {setShowIcons(false)}}
     >
-        <td>{row.id}</td>
         <td>{row.gasto}</td>
         <td>{row.categoria}</td>
         <td>{row.valor}</td>

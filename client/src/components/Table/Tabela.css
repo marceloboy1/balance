@@ -20,6 +20,7 @@
   }
 
   tr {
+    color: #000;
     background-color: rgb(205, 235, 253);
     transition: 450ms;
   }

@@ -10,10 +10,6 @@ function EditableRow({ editFormData, handleEditFormChange, onEditSend }) {
     return (
     <tr>
         <td>
-            {editFormData.id}
-        </td>
-        
-        <td>
             <input 
                 className="tableInput" 
                 onChange={handleEditFormChange} 

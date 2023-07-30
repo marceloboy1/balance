@@ -4,7 +4,11 @@ import Tabela from "../components/Table/Tabela";
 
 function Gastos() {
     return (
-        <Tabela />
+        <div className="mainContainer">
+            <div className="itemContainer">
+                <Tabela />
+            </div>
+        </div>
     )
 }
 

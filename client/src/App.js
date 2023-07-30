@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation, Outlet } from 'react-router-dom';
 import Home from './Routes/Home';
 import Gastos from './Routes/Gastos';
@@ -8,29 +8,18 @@ import LoginPage from './Routes/LoginPage';
 
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
+import LandingPage from './Routes/LandingPage';
+import UserProvider from './UserProvider';
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Topbar />
-        <Layout>
-          <Routes>
-            
-            <Route path="/" element={<Home />} />
-            <Route path="/gastos" element={<PrivateRoute />} >
-              <Route path="/gastos" element={<Gastos />} />
-            </Route>
-            <Route path="/orcamento" element={<PrivateRoute />} >
-              <Route path="/orcamento" element={<Orcamento />} />
-            </Route>
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </Layout>
-      </div>
-    </Router>
-  );
+function PrivateRoute() {
+  // Substitua esta linha pelo seu próprio código de autenticação
+  const isAuthenticated = !!localStorage.getItem('user');
+
+  if (!isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  return <Outlet />;
 }
 
 function Layout({ children }) {
@@ -45,16 +34,39 @@ function Layout({ children }) {
   );
 }
 
-function PrivateRoute() {
-  // Substitua esta linha pelo seu próprio código de autenticação
-  const isAuthenticated = !!localStorage.getItem('user');
-  console.log(isAuthenticated)
+function App() {
   
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
+  return (
+    <Router>
+      <div>
+        <Topbar />
+        <Layout>
+          <UserProvider>
+            <Routes>
+              
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
 
-  return <Outlet />;
+              <Route path="/home" element={<PrivateRoute />} >
+                <Route path="/home" element={<Home />} />
+              </Route>
+              <Route path="/gastos" element={<PrivateRoute />} >
+                <Route path="/gastos" element={<Gastos />} />
+              </Route>
+              <Route path="/orcamento" element={<PrivateRoute />} >
+                <Route path="/orcamento" element={<Orcamento />} />
+              </Route>
+              
+            </Routes>
+          </UserProvider>   
+        </Layout>
+      </div>
+    </Router>
+  );
 }
+
+
+
 
 export default App;

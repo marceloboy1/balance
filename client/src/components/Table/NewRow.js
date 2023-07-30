@@ -17,10 +17,7 @@ function NewRow({ newFormData, handleNewFormChange, onNewSend }) {
 
     return (
     <tr>
-        <td>
-            ID
-        </td>
-        
+     
         <td>
             <input 
                 className="tableInput" 
