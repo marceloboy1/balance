@@ -27,7 +27,7 @@ const Categorias = () => {
     const [soma, setSoma] = useState("");
     const [pontos, setPontos] = useState(0);  
     const [edited, setEdited] = useState(false);
-
+  
     useEffect(() => {
 
         getGategorias(user).then((data) => {
@@ -60,7 +60,7 @@ const Categorias = () => {
         setCategorias(newCat);
         setValores(newVal)
         setSoma(newSoma)
-        setPontos( 100 - newSoma )
+        //setPontos( 100 - newSoma )
         setEdited(true)
     }
 
@@ -80,9 +80,12 @@ const Categorias = () => {
 
     return (
     <div className="itemContainer">
+        <p>Organize seus gastos de acordo com a porcentagem do seu salário que pretende gastar com cada categoria.</p>
         <div className="catButtons">
-            <p>Pontos sobrando: {pontos}</p>
+            <p style={{ color: soma > 100 ? "red" : "antiquewhite"}}>Total utilizado: {soma}%</p>
         </div>
+            <p className="message" style={{display: soma > 100 ? "flex" : "none"}}>Você não pode utilizar mais que 100% do seu salário</p>
+
         {categorias &&  Object.entries(categorias).map((key) => {
             if (key[1]){
             return <InputSlider key={key[1].id} text={key[1].categoria} valor={key[1].valor} handleChange={handleChange} />;}
@@ -94,7 +97,7 @@ const Categorias = () => {
                     width:40,
                     height:40,
                 }}
-                disabled={!edited || (pontos < 0)}
+                disabled={!edited || (soma > 100)}
                 onClick={handleSave}
                 >
                 <Save />

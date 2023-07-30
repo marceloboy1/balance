@@ -34,10 +34,10 @@ app.post("/login", (req, res) => {
   console.log("Loggin in")
   const user = req.body.user;
   const hash = req.body.hash;
-  const query = 'SELECT * FROM users WHERE user = ?';
+  const query = 'SELECT * FROM users WHERE userId = ?';
   (async postData => {
     const resp = await db.getUser(query, user);
-    //const sessionUser = resp[0][0]
+   
     if (bcrypt.compare(hash, resp[0][0]["hash"])){
       console.log("SUCCESS")
       const token = jwt.sign(user, 'secret-key');

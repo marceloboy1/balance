@@ -1,5 +1,6 @@
 import React from "react";
 import Tabela from "../components/Table/Tabela";
+import Categorias from "../components/Categorias";
 
 function Home() {
     return (
@@ -8,7 +9,7 @@ function Home() {
                 <Tabela />
             </div>
             <div className="itemContainer">
-                <Tabela />
+                <Categorias />
             </div>
             <div className="itemContainer">
                 <Tabela />
