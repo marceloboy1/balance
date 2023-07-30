@@ -1,0 +1,6 @@
+.catButtons {
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

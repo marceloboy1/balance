@@ -17,7 +17,6 @@ function EditableRow({ editFormData, handleEditFormChange, onEditSend }) {
                 required="required" 
                 placeholder="Gasto"
                 value={editFormData.gasto} 
-                //ref={gastoRef}
                 />
         </td>
         
@@ -29,7 +28,6 @@ function EditableRow({ editFormData, handleEditFormChange, onEditSend }) {
             required="required" 
             placeholder="Categoria"
             value={editFormData.categoria}
-            //ref={categoriaRef}
             />
         </td>
         
@@ -41,13 +39,10 @@ function EditableRow({ editFormData, handleEditFormChange, onEditSend }) {
             required="required" 
             placeholder="Valor"
             value={editFormData.valor}
-            //ref={valorRef}
         />
         </td>
         <td>
             <EditActions newFormData={editFormData} handleClick={handleClick} />
-            {/* Ao clicar no icone ele envia os dados para o componente Actions para que sejam enviados para o servidor */}
-            {/* <TableActions gasto={gasto} categoria={categoria} valor={valor} handleClick={handleClick}/> */}
         </td>
     </tr>
     )

@@ -95,7 +95,7 @@ app.put("/gastos", (req, res) => {
 });
 
 app.delete("/gastos", (req, res) => {
-  console.log(req.body)
+  
   const id = req.body.row.id
   const gasto = req.body.row.gasto
   const query = 'DELETE from gastos WHERE id = ?';
@@ -112,18 +112,27 @@ app.delete("/gastos", (req, res) => {
 // Handle GET requests to /categoria route
 app.get("/orcamento", (req, res) => {
   
-  const id = req.query.id;
-  const user = req.query.user;
-  const token = req.query.token;
+  const user = req.query;
   
   (async getData => {
-    const [data] = await db.getStocks('SELECT id, categoria, valor FROM categorias');
+    const [data] = await db.getCategorias('SELECT id, categoria, valor FROM categorias WHERE userId = ?', user.id);
     res.json(data);
-    console.log(data)
-    console.log(data.length);
   })();
 });
 
+app.put ("/orcamento", (req, res) => {
+  
+  categorias = (req.body.categorias)
+  user = req.body.user
+  categorias.map((key) => {console.log(key)
+   const query = 'UPDATE categorias SET valor = ? WHERE id = ? AND userId = ?';
+   (async postData => {
+    await db.putCategorias(query, key.valor, key.id, user.id);
+   })();
+  })
+  console.log("Catgorias atualizadas")
+  res.send('Resposta enviada com sucesso!');
+});
 
 
 

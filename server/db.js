@@ -85,6 +85,22 @@ async function deleteGastos(query, id){
       });
 }
 
-module.exports = {getStocks, postUser, getUser, getGastos, postGastos, putGastos, deleteGastos}
+
+//função que pega os dados
+async function getCategorias(query, userId){
+    const conn = await connect();
+    return await conn.query(query, [userId]);
+}
+
+//função que atualiza os gastos
+async function putCategorias(query, valor, id, userId)
+{
+    const conn = await connect();
+    return await conn.query(query, [valor, id, userId], (error, results, fields) => {
+        if (error) throw error;
+      });
+}
+
+module.exports = {getStocks, postUser, getUser, getGastos, postGastos, putGastos, deleteGastos, putCategorias, getCategorias}
 
 
