@@ -1,2 +1,2 @@
 # balance
-Webapp for financial control using React, JS, MySql, Axios and Bootstrap
+Webapp for financial control using React, JS, MySql, Axios and Bootstrap. Work in progress...
