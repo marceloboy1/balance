@@ -1,9 +1,14 @@
 const db = require("./db");
+const utils = require("./utils")
 const path = require('path');
 const express = require("express");
+const fileupload = require("express-fileupload");
 const cors = require("cors");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+const xlsxFile = require('read-excel-file/node');
+
 
 const PORT = process.env.PORT || 3001;
 
@@ -12,6 +17,8 @@ const app = express();
 // Have Node serve the files for our built React app
 app.use(cors());
 app.use(express.json());
+app.use(fileupload());
+app.use(express.urlencoded({ extended: true }));
 
 //recebe a requisição do front e faz a call no DB
 //esta com um BUG pois aceita o mesmo usuário
@@ -134,7 +141,28 @@ app.put ("/orcamento", (req, res) => {
   res.send('Resposta enviada com sucesso!');
 });
 
+app.post ("/uploadFile", (req, res) => {
+  
+  // categorias = (req.body.categorias)
+  // user = req.body.user
+  // categorias.map((key) => {console.log(key)
+  //  const query = 'UPDATE categorias SET valor = ? WHERE id = ? AND userId = ?';
+  //  (async postData => {
+  //   await db.putCategorias(query, key.valor, key.id, user.id);
+  //  })();
+  // })
 
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('Nenhum arquivo foi enviado.');
+  }
+
+  const file = req.files.userGastos;
+
+  console.log("Arquivo recebido")
+  utils.handleGastosUpload(file);
+  res.send('Arquiuvo recebido com sucesso!');
+
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

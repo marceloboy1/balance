@@ -7,8 +7,10 @@ import NewRow from "./NewRow";
 
 function Tabela() {
 
+    const user = JSON.parse(localStorage.getItem("user"));
     const [rows, setRows] = useState("");
     const [loading, setLoading] = useState(true);
+    const [categorias, setCategorias] = useState("");
     
     //state que guarda o ID da linha clicada para edição
     const [editRowId, setEditRowId] = useState(null);
@@ -30,6 +32,10 @@ function Tabela() {
 
     useEffect(() => {
         buscarDados();
+        getGategorias(user).then((data) => {
+            const cat = Object.entries( data ).map((key) => {return(key[1].categoria)})
+            setCategorias(cat)
+        })
     }, []);
 
     //limpa as variáveis e os campos de input
@@ -63,11 +69,23 @@ function Tabela() {
     const buscarDados = async () => {
         const res = await axios.get('/gastos');
         setLoading(false);
-        console.log(res.data)
         setRows(res.data);
-        console.log(rows)
     }
-        
+
+        //faz a requisição para o backend
+    const getGategorias = async (user) => {
+
+        const res = await axios.get('/orcamento',
+        {
+            params: {
+                id: user.id,
+                user: user.user,
+                token: user.token
+            }
+        })
+        return(res.data);
+    }
+
     const handleEditFormChange = (event) => {
         event.preventDefault();
         const fieldName = event.target.getAttribute("name");

@@ -85,7 +85,6 @@ async function deleteGastos(query, id){
       });
 }
 
-
 //função que pega os dados
 async function getCategorias(query, userId){
     const conn = await connect();
